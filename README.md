@@ -1,2 +1,2 @@
-# jezzmemo.github.io
+# memo.github.io
 jezz的笔记
