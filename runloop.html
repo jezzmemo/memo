@@ -21,7 +21,38 @@ https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Multithre
 2.1 
 Input source是是异步的形式，消息一般来源与另外一个线程或者另外一个application.
 Timer是同步的，通过设置执行时间或者重复执行的间.
-以上两种都是通过application-specific handler routine 来处理以上事件的.
+Input sources deliver events asynchronously to your threads. 
+
+2.1.1 Input source有两种方式，
+一种是Port-base的方式，
+另外一种是自定义消息
+Port-based 是监听应用的 Mach ports. 这种方式需要添加一个NSMachPort对象到Runloop的Source中，
+当Port中有消息发送过来时，会唤醒Runloop来处理消息:
+
+- (void)handleMachMessage:(void *)msg
+{
+	
+}
+
+自定义消息是监听自定义的事件.如图所示:
+https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Multithreading/Art/custominputsource.jpg
+如果想使用自定义的Input Source向Runloop投递消息，需要使用CoreFoundation的API，Foundation的API不提供创建自定义的Input Source，根据文档，使用Input Source需要如下步骤：
+
+创建一个CFRunloopContextRef,实现三个回调函数:
+void	(*schedule)(void *info, CFRunLoopRef rl, CFStringRef mode);
+void	(*cancel)(void *info, CFRunLoopRef rl, CFStringRef mode);
+void	(*perform)(void *info);
+通过上面的context创建一个RunloopSourceRef:
+CFRunLoopSourceRef runLoopSource = CFRunLoopSourceCreate(NULL, 0, &context);
+将创建的RunloopSource添加到当前的Runloop中:
+CFRunLoopRef runLoop = CFRunLoopGetCurrent();
+CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
+向RunloopSource发送Signal，唤醒Runloop处理事件
+
+ 	CFRunLoopSourceSignal(runLoopSource);
+	CFRunLoopWakeUp(runloop);
+
+两个不同的地方在于，Port-based是由kernel自动发送信号量的，而自定义消息是由用户手动来控制发送的.
 
 2.Run Loop Modes
 3.Run Loop Observers
