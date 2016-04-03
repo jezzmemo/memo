@@ -9,3 +9,20 @@ Runloop是在程序启动的时候就开始运行，程序真正结束的时候�
 
 iOS中有两种方式获取Runloop对象,一种是NSRunLoop，另外一种是CFRunLoopRef，NSRunLoop是CFRunLoopRef的封装，不同的是NSRunLoop
 不是线程安全的，CFRunLoopRef是线程安全的。
+
+2.iOS的runloop的细节
+
+首先我们还是不厌其烦的拿出官方的解释图：
+https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Multithreading/Art/runloop.jpg
+
+从图中我们分解出以下的知识点：
+1.源(Source)，分成:(input source 和timer source)
+
+2.1 
+Input source是是异步的形式，消息一般来源与另外一个线程或者另外一个application.
+Timer是同步的，通过设置执行时间或者重复执行的间.
+以上两种都是通过application-specific handler routine 来处理以上事件的.
+
+2.Run Loop Modes
+3.Run Loop Observers
+4.Runloop的流程和时序
