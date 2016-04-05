@@ -36,13 +36,15 @@ Port-based 是监听应用的 Mach ports. 这种方式需要添加一个NSMachPo
 
 自定义消息是监听自定义的事件.如图所示:
 https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Multithreading/Art/custominputsource.jpg
-如果想使用自定义的Input Source向Runloop投递消息，需要使用CoreFoundation的API，Foundation的API不提供创建自定义的Input Source，根据文档，使用Input Source需要如下步骤：
+如果想使用自定义的Input Source向Runloop投递消息，需要使用CoreFoundation的API，Foundation的API不提供创建
+自定义的Input Source，根据文档，使用Input Source需要如下步骤：
 
 创建一个CFRunloopContextRef,实现三个回调函数:
 void	(*schedule)(void *info, CFRunLoopRef rl, CFStringRef mode);
 void	(*cancel)(void *info, CFRunLoopRef rl, CFStringRef mode);
 void	(*perform)(void *info);
 通过上面的context创建一个RunloopSourceRef:
+CFRunLoopSourceContext context = {0, self, NULL, NULL, NULL, NULL, NULL,&schedule,cancel,perform};
 CFRunLoopSourceRef runLoopSource = CFRunLoopSourceCreate(NULL, 0, &context);
 将创建的RunloopSource添加到当前的Runloop中:
 CFRunLoopRef runLoop = CFRunLoopGetCurrent();
@@ -54,8 +56,27 @@ CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
 
 两个不同的地方在于，Port-based是由kernel自动发送信号量的，而自定义消息是由用户手动来控制发送的.
 
+如果退出Runloop:
+--1.配置一个运行的超时时间.
+--2.主动告诉Runloop停止，CFRunLoopStop 
+
 2.Run Loop Modes
-3.Run Loop Observers
+这个再Runloop是一个比较重要的东西，根据字面的意思就是处于什么模式之下，在Input source以及Timer的监听，还有Runloop的observer
+是否被通知都是与modes相关的.
+Input source和timer都可以对应一个或者多个mode，用这种方式你可以过滤你想要的事件，不过也可以自定义mode来满足自己的应用场景.
+
+从个API可以看到系统默认预置进来的几种Mode:
+UITrackingRunLoopMode,
+GSEventReceiveRunLoopMode,
+kCFRunLoopDefaultMode,
+UIInitializationRunLoopMode,
+kCFRunLoopCommonModes
+
+这些mode中，需要注意的有三种:kCFRunLoopDefaultMode, kCFRunLoopCommonModes和UITrackingRunLoopMode。
+kCFRunLoopDefaultMode:是最常用的，再开始和配置runloop的时候.
+kCFRunLoopCommonModes:是mode的一个集合包括，再Core Foundation应用里默认包含kCFRunLoopDefaultMode，再Cocoa应用里
+默认包含:default, modal, and event tracking modes
+3.Observer
 4.Runloop的流程和时序
 
 参考资料:
