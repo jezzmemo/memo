@@ -76,8 +76,68 @@ kCFRunLoopCommonModes
 kCFRunLoopDefaultMode:是最常用的，再开始和配置runloop的时候.
 kCFRunLoopCommonModes:是mode的一个集合包括，再Core Foundation应用里默认包含kCFRunLoopDefaultMode，再Cocoa应用里
 默认包含:default, modal, and event tracking modes
+
 3.Observer
-4.Runloop的流程和时序
+每个 Observer 都包含了一个回调（函数指针），当 RunLoop 的状态发生变化时，观察者就能通过回调接受到这个变化。
+可以观测的时间点有以下几个：
+ kCFRunLoopEntry        // 即将进入Loop
+ kCFRunLoopBeforeTimers  // 即将处理 Timer
+ kCFRunLoopBeforeSources  // 即将处理 Source
+ kCFRunLoopBeforeWaiting // 即将进入休眠
+ kCFRunLoopAfterWaiting // 刚从休眠中唤醒
+ kCFRunLoopExit         // 即将退出Loop
+ 
+如果想要获取Runloop每一次扫描的回调，可以注册observer:
+CFRunLoopObserverContext context = {
+   0,
+   (__bridge void *)(self),
+   NULL,
+   NULL,
+   NULL
+};
+CFRunLoopObserverRef observerRef = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, &runloopCallback, &context);
+CFRunLoopAddObserver(CFRunLoopGetCurrent(), observerRef, kCFRunLoopCommonModes);
+
+上面代码以Main Runloop为例，注册了一个回调函数:runloopCallback,同时指定了要监听事件类型为kCFRunLoopAllActivities。
+在回调函数中，将被监听的事件打印出来：
+void runloopCallback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info)
+{
+    NSString* activityStr = @"unkown";
+    if (((activity >> 0)&1) == 1) {
+        activityStr = @"kCFRunLoopEntry";
+    }
+    else if (((activity >> 1)&1) == 1){
+        activityStr = @"kCFRunLoopBeforeTimers";
+    }
+    else if (((activity >> 2)&1) == 1){
+        activityStr = @"kCFRunLoopBeforeSources";
+    }
+    else if (((activity >> 5)&1) == 1){
+        activityStr = @"kCFRunLoopBeforeWaiting";
+    }
+    else if (((activity >> 6)&1) == 1){
+        activityStr = @"kCFRunLoopAfterWaiting";
+    }
+    else if (((activity >> 7)&1) == 1){
+        activityStr = @"kCFRunLoopExit";
+    }
+    else
+    {
+        activityStr = @"kCFRunLoopAllActivities";
+    }
+
+    printf("[%.4f] activity:%s\n",CFAbsoluteTimeGetCurrent(),activityStr.UTF8String);
+}
+4.Runloop的使用场景
+4.1-使用port或者自定义的port与其他线程通讯
+4.2-timer
+4.3-使用performSelector时候有可能用到
+4.4-用于周期性的检查任务
+
+5.下面列举下我们见到的使用Runloop的案例
+5.1-AFNetworking
+5.2-
+
 
 参考资料:
 https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html
