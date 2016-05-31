@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS之MVC | Jezz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS之MVC">
+<meta property="og:url" content="http://blog.imemo8.com/2016/04/29/iOS-MVC/index.html">
+<meta property="og:site_name" content="Jezz">
+<meta property="og:description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
+<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png">
+<meta property="og:image" content="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Art/cocoa_mvc.gif">
+<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152425723031.png">
+<meta property="og:updated_time" content="2016-05-04T15:40:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS之MVC">
+<meta name="twitter:description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
+<meta name="twitter:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jezz" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jezz</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS-MVC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/29/iOS-MVC/" class="article-date">
+  <time datetime="2016-04-28T16:14:50.000Z" itemprop="datePublished">2016-04-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS之MVC
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?<br>以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。<br><a id="more"></a></p>
+<blockquote>
+<p>provides a high-level MVC architecture and automates communication between models,views, and controllers.</p>
+</blockquote>
+<p>为什么我这次专门讨论MVC架构，因为的这种架构很简单，很容易理解和接受，让大多数的开发人员快速的上手并应用到实际的项目当中,还有一种说法就是,MVC是一种抽象级别很高的，其他的MVP,MVVM等等其他的架构方式，都是基于MVC这种模式演变过来的，所以MVC很值得我们去研究和学习.</p>
+<h2 id="传统MVC"><a href="#传统MVC" class="headerlink" title="传统MVC"></a>传统MVC</h2><p><img src="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png" alt="MVC"></p>
+<p>根据以上图示，MVC三者之间都有通信，他们之间的藕合度很高，所以这种模式不被iOS所推荐</p>
+<h2 id="Cocoa的MVC"><a href="#Cocoa的MVC" class="headerlink" title="Cocoa的MVC"></a>Cocoa的MVC</h2><p><img src="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Art/cocoa_mvc.gif" alt="Cocoa MVC"></p>
+<p>Controller是Model和View之间的协作作用，Model和View之间是不通讯的，他们两之间的协作只能通过Controller来作为中间者来通讯，这样的好处是View和Model是独立的，他们之间的复用度比较高，以及测试性也比较强.</p>
+<h2 id="实际的Cocoa的MVC"><a href="#实际的Cocoa的MVC" class="headerlink" title="实际的Cocoa的MVC"></a>实际的Cocoa的MVC</h2><p><img src="http://cc.cocimg.com/api/uploads/20160107/1452152425723031.png" alt="Real MVC"></p>
+<p>根据实际情况里的iOS里的MVC,View和Controller之间是耦合的，这样带来的问题就是Controller负责的任务比较多，比如：</p>
+<ul>
+<li>网络请求</li>
+<li>UI 的调整和组合</li>
+<li>业务逻辑</li>
+<li>Delegate、Data source</li>
+</ul>
+<p>所以Massive View Controller就是这样出现的，基于这种情况，测试性其实只有Model是独立可测试性的，View和Controller是耦合的，可测试性很差.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>根据以上情况我们可以总结，iOS的MVC就开发速度来说是一个不错的选择方案，因为学习成本低，团队都能容易接受这种架构，比如你的团队在磨合阶段选择这个也是一个不错的选择，不过问题也很明显，就是Controller的臃肿，工程在不断的庞大过程中表现的很突出，所以大家要根据大家的实际情况来选择最适合自己的方案。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/04/29/iOS-MVC/" data-id="ciov73kfp000ammzpuz3aoj4v" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/04/29/iOS-MVC/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/30/iOS-specifications/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS开发规范
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/23/Retain-cycle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Retain cycle</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/21/NSSet/">NSSet</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/17/RunLoop/">RunLoop</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2016/04/29/iOS-MVC/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NSSet | Jezz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NSSet, NSArray和NSDictionary是Foundation的三个很基本的集合类型，下面用很一张图很形象的表达这三种数据集合的特点:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSSet">
+<meta property="og:url" content="http://blog.imemo8.com/2016/04/21/NSSet/index.html">
+<meta property="og:site_name" content="Jezz">
+<meta property="og:description" content="NSSet, NSArray和NSDictionary是Foundation的三个很基本的集合类型，下面用很一张图很形象的表达这三种数据集合的特点:">
+<meta property="og:image" content="http://rypress.com/tutorials/objective-c/data-types/media/nsset.png">
+<meta property="og:updated_time" content="2016-05-04T15:38:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSSet">
+<meta name="twitter:description" content="NSSet, NSArray和NSDictionary是Foundation的三个很基本的集合类型，下面用很一张图很形象的表达这三种数据集合的特点:">
+<meta name="twitter:image" content="http://rypress.com/tutorials/objective-c/data-types/media/nsset.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Jezz" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jezz</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-NSSet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/21/NSSet/" class="article-date">
+  <time datetime="2016-04-21T15:31:32.000Z" itemprop="datePublished">2016-04-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NSSet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NSSet, NSArray和NSDictionary是Foundation的三个很基本的集合类型，下面用很一张图很形象的表达这三种数据集合的特点:<br><img src="http://rypress.com/tutorials/objective-c/data-types/media/nsset.png" alt="nsset"><br><a id="more"></a><br>本次着重讲解NSSet,<br>它只能存放不能重复的元素，而且在查找的时候利用hash来提高性能，如果你有很多数据，想知道你的数据是否在这个集合中，<br>这种场景十分适合使用NSSet,不是NSArray.</p>
+<h1 id="创建NSSet"><a href="#创建NSSet" class="headerlink" title="创建NSSet"></a>创建NSSet</h1><p>最基本的创建方式<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *americanMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Chrysler"</span>, <span class="string">@"Ford"</span>,</span><br><span class="line">                                             <span class="string">@"General Motors"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, americanMakes);</span><br></pre></td></tr></table></figure></p>
+<p>NSSet还可以通过setWithArray的方法来创建，但是它会将NSArray里相同的数据合并，如：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *japaneseMakes = @[<span class="string">@"Honda"</span>, <span class="string">@"Mazda"</span>,</span><br><span class="line">                           <span class="string">@"Mitsubishi"</span>, <span class="string">@"Honda"</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *uniqueMakes = [<span class="built_in">NSSet</span> setWithArray:japaneseMakes];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, uniqueMakes);    <span class="comment">// Honda, Mazda, Mitsubishi</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Sets里面的的元素是强引用的，所以在自定义对象的时候，注意循环引用的问题.</strong></p>
+<h1 id="遍历Sets"><a href="#遍历Sets" class="headerlink" title="遍历Sets"></a>遍历Sets</h1><p>foreach的方式<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *models = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Civic"</span>, <span class="string">@"Accord"</span>,</span><br><span class="line">                                      <span class="string">@"Odyssey"</span>, <span class="string">@"Pilot"</span>, <span class="string">@"Fit"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"The set has %li elements"</span>, [models count]);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">id</span> item <span class="keyword">in</span> models) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>还有一种方式就是block,通过设置stop让其直接break出来.<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[models enumerateObjectsUsingBlock:^(<span class="keyword">id</span> obj, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Current item: %@"</span>, obj);</span><br><span class="line">    <span class="keyword">if</span> ([obj isEqualToString:<span class="string">@"Fit"</span>]) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"I was looking for a Honda Fit, and I found it!"</span>);</span><br><span class="line">        *stop = <span class="literal">YES</span>;    <span class="comment">// Stop enumerating items</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure></p>
+<h1 id="比较Sets"><a href="#比较Sets" class="headerlink" title="比较Sets"></a>比较Sets</h1><p>这个比较容易理解，直接上代码：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">SSet *japaneseMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Honda"</span>, <span class="string">@"Nissan"</span>,</span><br><span class="line">                              <span class="string">@"Mitsubishi"</span>, <span class="string">@"Toyota"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *johnsFavoriteMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Honda"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *marysFavoriteMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Toyota"</span>,</span><br><span class="line">                                                  <span class="string">@"Alfa Romeo"</span>, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ([johnsFavoriteMakes isEqualToSet:japaneseMakes]) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"John likes all the Japanese auto makers and no others"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ([johnsFavoriteMakes intersectsSet:japaneseMakes]) &#123;</span><br><span class="line">    <span class="comment">// You'll see this message</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"John likes at least one Japanese auto maker"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ([johnsFavoriteMakes isSubsetOfSet:japaneseMakes]) &#123;</span><br><span class="line">    <span class="comment">// And this one, too</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"All of the auto makers that John likes are Japanese"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> ([marysFavoriteMakes isSubsetOfSet:japaneseMakes]) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"All of the auto makers that Mary likes are Japanese"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="是否是子集检查"><a href="#是否是子集检查" class="headerlink" title="是否是子集检查"></a>是否是子集检查</h1><p>containsObject:检查是否存在，返回bool, member:如果存在的话，就返回这个对象的引用，</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *selectedMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Maserati"</span>,</span><br><span class="line">                                             <span class="string">@"Porsche"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="comment">// BOOL checking</span></span><br><span class="line"><span class="keyword">if</span> ([selectedMakes containsObject:<span class="string">@"Maserati"</span>]) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"The user seems to like expensive cars"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// nil checking</span></span><br><span class="line"><span class="built_in">NSString</span> *result = [selectedMakes member:<span class="string">@"Maserati"</span>];</span><br><span class="line"><span class="keyword">if</span> (result != <span class="literal">nil</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@ is one of the selected makes"</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="过滤-Sets"><a href="#过滤-Sets" class="headerlink" title="过滤 Sets"></a>过滤 Sets</h1><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *toyotaModels = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Corolla"</span>, <span class="string">@"Sienna"</span>,</span><br><span class="line">                       <span class="string">@"Camry"</span>, <span class="string">@"Prius"</span>,</span><br><span class="line">                       <span class="string">@"Highlander"</span>, <span class="string">@"Sequoia"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *cModels = [toyotaModels objectsPassingTest:^<span class="built_in">BOOL</span>(<span class="keyword">id</span> obj, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">    <span class="keyword">if</span> ([obj hasPrefix:<span class="string">@"C"</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, cModels);    <span class="comment">// Corolla, Camry</span></span><br></pre></td></tr></table></figure>
+<h1 id="合并-Sets"><a href="#合并-Sets" class="headerlink" title="合并 Sets"></a>合并 Sets</h1><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *affordableMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Ford"</span>, <span class="string">@"Honda"</span>,</span><br><span class="line">                                     <span class="string">@"Nissan"</span>, <span class="string">@"Toyota"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *fancyMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Ferrari"</span>, <span class="string">@"Maserati"</span>,</span><br><span class="line">                                          <span class="string">@"Porsche"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *allMakes = [affordableMakes setByAddingObjectsFromSet:fancyMakes];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, allMakes);</span><br></pre></td></tr></table></figure>
+<h1 id="NSMutableSet"><a href="#NSMutableSet" class="headerlink" title="NSMutableSet"></a>NSMutableSet</h1><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableSet</span> *brokenCars = [<span class="built_in">NSMutableSet</span> setWithObjects:</span><br><span class="line">                            <span class="string">@"Honda Civic"</span>, <span class="string">@"Nissan Versa"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSMutableSet</span> *repairedCars = [<span class="built_in">NSMutableSet</span> setWithCapacity:<span class="number">5</span>];</span><br><span class="line"><span class="comment">// "Fix" the Honda Civic</span></span><br><span class="line">[brokenCars removeObject:<span class="string">@"Honda Civic"</span>];</span><br><span class="line">[repairedCars addObject:<span class="string">@"Honda Civic"</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Broken cars: %@"</span>, brokenCars);     <span class="comment">// Nissan Versa</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Repaired cars: %@"</span>, repairedCars); <span class="comment">// Honda Civic</span></span><br></pre></td></tr></table></figure>
+<h1 id="NSMutableSet过滤使用Predicates"><a href="#NSMutableSet过滤使用Predicates" class="headerlink" title="NSMutableSet过滤使用Predicates"></a>NSMutableSet过滤使用Predicates</h1><p>no mutable NSSet 使用 objectsPassingTest:方法，但是mutable只能使用filterUsingPredicate:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableSet</span> *toyotaModels = [<span class="built_in">NSMutableSet</span> setWithObjects:<span class="string">@"Corolla"</span>, <span class="string">@"Sienna"</span>,</span><br><span class="line">                              <span class="string">@"Camry"</span>, <span class="string">@"Prius"</span>,</span><br><span class="line">                              <span class="string">@"Highlander"</span>, <span class="string">@"Sequoia"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSPredicate</span> *startsWithC = [<span class="built_in">NSPredicate</span> predicateWithBlock:</span><br><span class="line">                            ^<span class="built_in">BOOL</span>(<span class="keyword">id</span> evaluatedObject, <span class="built_in">NSDictionary</span> *bindings) &#123;</span><br><span class="line">                                <span class="keyword">if</span> ([evaluatedObject hasPrefix:<span class="string">@"C"</span>]) &#123;</span><br><span class="line">                                    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">                                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                    <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;];</span><br><span class="line">[toyotaModels filterUsingPredicate:startsWithC];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, toyotaModels);    <span class="comment">// Corolla, Camry</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Set的集合操作"><a href="#Set的集合操作" class="headerlink" title="Set的集合操作"></a>Set的集合操作</h1><p>两个集合合并，交集和不在交集里的操作<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSSet</span> *japaneseMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Honda"</span>, <span class="string">@"Nissan"</span>,</span><br><span class="line">                        <span class="string">@"Mitsubishi"</span>, <span class="string">@"Toyota"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *johnsFavoriteMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Honda"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSSet</span> *marysFavoriteMakes = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"Toyota"</span>,</span><br><span class="line">                             <span class="string">@"Alfa Romeo"</span>, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSMutableSet</span> *result = [<span class="built_in">NSMutableSet</span> setWithCapacity:<span class="number">5</span>];</span><br><span class="line"><span class="comment">// Union</span></span><br><span class="line">[result setSet:johnsFavoriteMakes];</span><br><span class="line">[result unionSet:marysFavoriteMakes];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Either John's or Mary's favorites: %@"</span>, result);</span><br><span class="line"><span class="comment">// Intersection</span></span><br><span class="line">[result setSet:johnsFavoriteMakes];</span><br><span class="line">[result intersectSet:japaneseMakes];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"John's favorite Japanese makes: %@"</span>, result);</span><br><span class="line"><span class="comment">// Relative Complement</span></span><br><span class="line">[result setSet:japaneseMakes];</span><br><span class="line">[result minusSet:johnsFavoriteMakes];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Japanese makes that are not John's favorites: %@"</span>,</span><br><span class="line">      result);</span><br></pre></td></tr></table></figure></p>
+<h1 id="遍历删除注意点"><a href="#遍历删除注意点" class="headerlink" title="遍历删除注意点"></a>遍历删除注意点</h1><p><strong>请不要以这种方式删除操作</strong><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableSet</span> *makes = [<span class="built_in">NSMutableSet</span> setWithObjects:<span class="string">@"Ford"</span>, <span class="string">@"Honda"</span>,</span><br><span class="line">                       <span class="string">@"Nissan"</span>, <span class="string">@"Toyota"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span> *make <span class="keyword">in</span> makes) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, make);</span><br><span class="line">    <span class="keyword">if</span> ([make hasPrefix:<span class="string">@"T"</span>]) &#123;</span><br><span class="line">        <span class="comment">// Throws an NSGenericException:</span></span><br><span class="line">        <span class="comment">// "Collection was mutated while being enumerated"</span></span><br><span class="line">        [makes removeObject:<span class="string">@"Toyota"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>要以以下方式进行删除操作：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableSet</span> *makes = [<span class="built_in">NSMutableSet</span> setWithObjects:<span class="string">@"Ford"</span>, <span class="string">@"Honda"</span>,</span><br><span class="line">                       <span class="string">@"Nissan"</span>, <span class="string">@"Toyota"</span>, <span class="literal">nil</span>];</span><br><span class="line"><span class="built_in">NSArray</span> *snapshot = [makes allObjects];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span> *make <span class="keyword">in</span> snapshot) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, make);</span><br><span class="line">    <span class="keyword">if</span> ([make hasPrefix:<span class="string">@"T"</span>]) &#123;</span><br><span class="line">        [makes removeObject:<span class="string">@"Toyota"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, makes);</span><br></pre></td></tr></table></figure></p>
+<h1 id="NSCountedSet"><a href="#NSCountedSet" class="headerlink" title="NSCountedSet"></a>NSCountedSet</h1><p>这个是一个特殊的Set,它允许添加重复的元素，而且可以获取重复的次数：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSCountedSet</span> *inventory = [<span class="built_in">NSCountedSet</span> setWithCapacity:<span class="number">5</span>];</span><br><span class="line">[inventory addObject:<span class="string">@"Honda Accord"</span>];</span><br><span class="line">[inventory addObject:<span class="string">@"Honda Accord"</span>];</span><br><span class="line">[inventory addObject:<span class="string">@"Nissan Altima"</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"There are %li Accords in stock and %li Altima"</span>,</span><br><span class="line">[inventory countForObject:<span class="string">@"Honda Accord"</span>],    <span class="comment">// 2</span></span><br><span class="line">[inventory countForObject:<span class="string">@"Nissan Altima"</span>]);  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/04/21/NSSet/" data-id="ciov73kf50000mmzpejwykdpi" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/04/21/NSSet/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSSet/">NSSet</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/04/23/Retain-cycle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Retain cycle
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/17/RunLoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">RunLoop</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/21/NSSet/">NSSet</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/17/RunLoop/">RunLoop</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2016/04/21/NSSet/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
