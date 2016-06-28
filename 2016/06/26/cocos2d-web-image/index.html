@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Cocos2d-iOS网络加载图片 | iMemo的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="由于最近的工作都是和Cocos2d相关的，所以最近都是出于边学边用的状态，最近遇到一个比较常见的问题，Cocos2d没有网络加载图片的第三方库，找了一圈也没有发现，以前在做应用的时候比较常用的是SDWebImage或者是AFNetworking都可以满足我的需求，所以在这种情况下，我们只能自己写一个类似于这种功能的异步加载图片的Library。
+需求分析
+根据指定url即可返回图片
+解决重复下载，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cocos2d-iOS网络加载图片">
+<meta property="og:url" content="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/index.html">
+<meta property="og:site_name" content="iMemo的技术博客">
+<meta property="og:description" content="由于最近的工作都是和Cocos2d相关的，所以最近都是出于边学边用的状态，最近遇到一个比较常见的问题，Cocos2d没有网络加载图片的第三方库，找了一圈也没有发现，以前在做应用的时候比较常用的是SDWebImage或者是AFNetworking都可以满足我的需求，所以在这种情况下，我们只能自己写一个类似于这种功能的异步加载图片的Library。
+需求分析
+根据指定url即可返回图片
+解决重复下载，">
+<meta property="og:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/preview.png">
+<meta property="og:updated_time" content="2016-06-28T15:09:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cocos2d-iOS网络加载图片">
+<meta name="twitter:description" content="由于最近的工作都是和Cocos2d相关的，所以最近都是出于边学边用的状态，最近遇到一个比较常见的问题，Cocos2d没有网络加载图片的第三方库，找了一圈也没有发现，以前在做应用的时候比较常用的是SDWebImage或者是AFNetworking都可以满足我的需求，所以在这种情况下，我们只能自己写一个类似于这种功能的异步加载图片的Library。
+需求分析
+根据指定url即可返回图片
+解决重复下载，">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/preview.png">
+  
+    <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">iMemo的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cocos2d-web-image" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/26/cocos2d-web-image/" class="article-date">
+  <time datetime="2016-06-26T14:01:31.000Z" itemprop="datePublished">2016-06-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cocos2d/">Cocos2d</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Cocos2d-iOS网络加载图片
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于最近的工作都是和Cocos2d相关的，所以最近都是出于边学边用的状态，最近遇到一个比较常见的问题，Cocos2d没有网络加载图片的第三方库，找了一圈也没有发现，以前在做应用的时候比较常用的是SDWebImage或者是AFNetworking都可以满足我的需求，所以在这种情况下，我们只能自己写一个类似于这种功能的异步加载图片的Library。</p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><ul>
+<li>根据指定url即可返回图片</li>
+<li>解决重复下载，以及同一个url下载的问题</li>
+<li>缓存机制</li>
+<li>内存异常机制</li>
+</ul>
+<a id="more"></a>
+<h3 id="缓存机制"><a href="#缓存机制" class="headerlink" title="缓存机制"></a>缓存机制</h3><p>在这里捎带说下，我们这里的缓存工作，Cocos2d已经帮我们做了，在DownloaderManager下载完一个图片时，然后用CCSpriteFrame来包装本地图片<br>大致代码如下:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];</span><br><span class="line">   <span class="keyword">if</span> (!frame)</span><br><span class="line">   &#123;</span><br><span class="line">       CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:imageName];</span><br><span class="line">       frame = [texture createSpriteFrame];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">-(CCSpriteFrame*) spriteFrameByName:(<span class="built_in">NSString</span>*)name</span><br><span class="line">&#123;</span><br><span class="line">	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!frame)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Check fileLookup.plist</span></span><br><span class="line">        <span class="built_in">NSString</span> *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];</span><br><span class="line">        name = newName ?: name;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Try finding the frame in one of the registered sprite sheets</span></span><br><span class="line">        <span class="built_in">NSString</span>* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];</span><br><span class="line">        <span class="keyword">if</span> (spriteFrameFile) [<span class="keyword">self</span> addSpriteFramesWithFile:spriteFrameFile];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Attempt to load the frame again</span></span><br><span class="line">        frame = [_spriteFrames objectForKey:name];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">if</span>( ! frame ) &#123;</span><br><span class="line">		<span class="comment">// try alias dictionary</span></span><br><span class="line">		<span class="built_in">NSString</span> *key = [_spriteFramesAliases objectForKey:name];</span><br><span class="line">		frame = [_spriteFrames objectForKey:key];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> (CCSpriteFrame *)frame.proxy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>大概流程就是先从内存当中获取，如果没有再去文件中获取，如果在文件中找到并加入到内存缓存中去。</strong></p>
+<h3 id="内存异常机制"><a href="#内存异常机制" class="headerlink" title="内存异常机制"></a>内存异常机制</h3><p>这部分其实也是Cocos2d已经处理过了，因为通过下载的文件保存到本地，文件名就是内存当中的key，如果发生内存警告,Cocos2d将执行以下操作:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>) purgeCachedData</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>([_delegate respondsToSelector:<span class="keyword">@selector</span>(purgeCachedData)])</span><br><span class="line">    &#123;</span><br><span class="line">        [_delegate purgeCachedData];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	[CCRenderState flushCache];</span><br><span class="line">	[CCLabelBMFont purgeCachedData];</span><br><span class="line">	<span class="keyword">if</span> ([_sharedDirector view])</span><br><span class="line">		[[CCTextureCache sharedTextureCache] removeUnusedTextures];</span><br><span class="line">	[[CCFileUtils sharedFileUtils] purgeCachedEntries];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上代码分别通过以下方面来释放内存的缓存:</p>
+<ul>
+<li>渲染缓存</li>
+<li>BMF的字体缓存</li>
+<li>已经没有用的纹理缓存</li>
+<li>本地的文件缓存</li>
+</ul>
+<h2 id="API设计"><a href="#API设计" class="headerlink" title="API设计"></a>API设计</h2><p>在参考了SDWebImage的设计后，我觉得沿用Category这种方式来设计API，这种方式的优点就是不用修改源代码，来扩展新方法，或者修改已有的方法，</p>
+<p>头文件如下:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CCSprite</span> (<span class="title">WebImage</span>)</span></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)asyncDownloadPic:(nonnull <span class="built_in">NSString</span>*)url;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h4><p>在这里我们的依赖是AFNetworking,这种我们不用写网络部分，只用简单的封装即可达到自己的需求。<br>如果自己的项目没有依赖AFNetworking，自己可以实现DownloaderManager即可,这个根据自己的需求来决定。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>我们这里只有两个文件即可达到我们的需求，Spirte的Category:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CCSprite</span> (<span class="title">WebImage</span>)</span></span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)asyncDownloadPic:(nonnull <span class="built_in">NSString</span>*)url&#123;</span><br><span class="line">    </span><br><span class="line">    DownloaderManager* downloader = [DownloaderManager share];</span><br><span class="line">	</span><br><span class="line">    <span class="built_in">NSString</span> *cacheDirectory = [<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>,<span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>) firstObject];</span><br><span class="line">    <span class="keyword">if</span> (url != <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *localFullPath = [cacheDirectory stringByAppendingFormat:<span class="string">@"/%@.png"</span>,[url lastPathComponent]];</span><br><span class="line">        </span><br><span class="line">        __<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) _<span class="keyword">self</span> = <span class="keyword">self</span>;</span><br><span class="line">		</span><br><span class="line">		[<span class="keyword">self</span> setSpriteFrame:[CCSpriteFrame frameWithImageNamed:<span class="string">@"list_item_demo.png"</span>]];</span><br><span class="line">		</span><br><span class="line">        <span class="keyword">if</span>(![[<span class="built_in">NSFileManager</span>  defaultManager] fileExistsAtPath:localFullPath])&#123;</span><br><span class="line">			</span><br><span class="line">            [downloader downloadAsync:url complete:^(<span class="built_in">NSURL</span>* filePath)&#123;</span><br><span class="line">                _<span class="keyword">self</span>.scale = <span class="number">1.0</span> / [CCDirector sharedDirector].contentScaleFactor;</span><br><span class="line">                _<span class="keyword">self</span>.spriteFrame = [CCSpriteFrame frameWithImageNamed:localFullPath];</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            _<span class="keyword">self</span>.scale = <span class="number">1.0</span> / [CCDirector sharedDirector].contentScaleFactor;;</span><br><span class="line">            _<span class="keyword">self</span>.spriteFrame = [CCSpriteFrame frameWithImageNamed:localFullPath];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>以上部分就是给Sprite设置了默认图片，当图片请求成功时更新图片</p>
+<p>另外还有一个就是文件下载</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">	 记录相同URL的block，当url有结果时，统一返回结果</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="built_in">BOOL</span> first = <span class="literal">NO</span>;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="keyword">self</span>.urlCallBack[url]) &#123;</span><br><span class="line">		<span class="keyword">self</span>.urlCallBack[url] = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">		first = <span class="literal">YES</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">NSMutableArray</span> *callbacksForURL = <span class="keyword">self</span>.urlCallBack[url];</span><br><span class="line">	<span class="built_in">NSMutableDictionary</span> *callbacks = [<span class="built_in">NSMutableDictionary</span> new];</span><br><span class="line">	<span class="keyword">if</span> (complete) callbacks[kCompletedCallbackKey] = [complete <span class="keyword">copy</span>];</span><br><span class="line">	<span class="keyword">if</span> (fail) callbacks[kFailedCallbackKey] = [fail <span class="keyword">copy</span>];</span><br><span class="line">	[callbacksForURL addObject:callbacks];</span><br><span class="line">	<span class="keyword">self</span>.urlCallBack[url] = callbacksForURL;</span><br></pre></td></tr></table></figure>
+<p>这是其中一段处理相同URL的处理，如果URL相同将保存在集合中，由其中一个返回结果的response统一集中返回结果</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>在代码中，使用的例子如下:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CCSprite* pic = [CCSprite emptySprite];</span><br><span class="line">[pic asyncDownloadPic:<span class="string">@"http://www.google.com/pic.jpg"</span>];</span><br><span class="line">pic.anchorPoint = ccp(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">[cell addChild:pic];</span><br></pre></td></tr></table></figure></p>
+<p>最终的效果是这样的:<br><img src="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/preview.png" alt="SpriteDemo"></p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p><a href="Github">https://github.com/jezzmemo/Cocos2d-iOS-WebImage</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/" data-id="cipy536xo00006gru7lbsa43x" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/30/iOS-specifications/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS开发规范</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/26/cocos2d-web-image/">Cocos2d-iOS网络加载图片</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/21/NSSet/">NSSet</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2016/06/26/cocos2d-web-image/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

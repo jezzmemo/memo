@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS开发规范 | iMemo的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="随着公司的脚步加快，为了快速完成规定的功能和任务，以及为了快速测试功能的方向性是否可行,所以我们最近招了一个新同事，来加快速度，但是新同事和我们之前的开发规范有些冲突，为了让团推更好的协作，我们都会遵循以下规范.
+为什么需要规范开发在正式写出各种开发规范之前，我们还是要说说这其中的好处，因为国内的开发人员做什么事情之前都要给出充足的理由，来说明这件事请的重要性，才会引起我们开发人员的重视，才能将这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发规范">
+<meta property="og:url" content="http://blog.imemo8.com/2016/05/30/iOS-specifications/index.html">
+<meta property="og:site_name" content="iMemo的技术博客">
+<meta property="og:description" content="随着公司的脚步加快，为了快速完成规定的功能和任务，以及为了快速测试功能的方向性是否可行,所以我们最近招了一个新同事，来加快速度，但是新同事和我们之前的开发规范有些冲突，为了让团推更好的协作，我们都会遵循以下规范.
+为什么需要规范开发在正式写出各种开发规范之前，我们还是要说说这其中的好处，因为国内的开发人员做什么事情之前都要给出充足的理由，来说明这件事请的重要性，才会引起我们开发人员的重视，才能将这">
+<meta property="og:updated_time" content="2016-06-06T08:24:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发规范">
+<meta name="twitter:description" content="随着公司的脚步加快，为了快速完成规定的功能和任务，以及为了快速测试功能的方向性是否可行,所以我们最近招了一个新同事，来加快速度，但是新同事和我们之前的开发规范有些冲突，为了让团推更好的协作，我们都会遵循以下规范.
+为什么需要规范开发在正式写出各种开发规范之前，我们还是要说说这其中的好处，因为国内的开发人员做什么事情之前都要给出充足的理由，来说明这件事请的重要性，才会引起我们开发人员的重视，才能将这">
+  
+    <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">iMemo的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS-specifications" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/30/iOS-specifications/" class="article-date">
+  <time datetime="2016-05-30T07:37:38.000Z" itemprop="datePublished">2016-05-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS开发规范
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着公司的脚步加快，为了快速完成规定的功能和任务，以及为了快速测试功能的方向性是否可行,所以我们最近招了一个新同事，来加快速度，但是新同事和我们之前的开发规范有些冲突，为了让团推更好的协作，我们都会遵循以下规范.</p>
+<h2 id="为什么需要规范开发"><a href="#为什么需要规范开发" class="headerlink" title="为什么需要规范开发"></a>为什么需要规范开发</h2><p>在正式写出各种开发规范之前，我们还是要说说这其中的好处，因为国内的开发人员做什么事情之前都要给出充足的理由，来说明这件事请的重要性，才会引起我们开发人员的重视，才能将这个事情有效的执行下去,下面我们列出规范开发，对我们有以下好处:</p>
+<ul>
+<li>促进团队协作,提高代码的阅读性</li>
+<li>增强代码的维护性，以及降低维护成本</li>
+<li>规范代码，有助于代码审查</li>
+<li>养成良好的习惯，有助于自身的成长<a id="more"></a>
+</li>
+</ul>
+<h2 id="基本命名规则"><a href="#基本命名规则" class="headerlink" title="基本命名规则"></a>基本命名规则</h2><p>驼峰法分小驼峰法和大驼峰法。小驼峰法：除第一个单词之外，其他单词首字母大写。大驼峰法相比小驼峰法，大驼峰法把第一个单词的首字母也大写了。</p>
+<p>成员变量命名用小驼峰，类名命名用大驼峰.</p>
+<h2 id="基本原则"><a href="#基本原则" class="headerlink" title="基本原则"></a>基本原则</h2><h3 id="清晰"><a href="#清晰" class="headerlink" title="清晰"></a>清晰</h3><p>相对于简洁的风格，我们提倡用完整的单词来表达，这样表达的意思更加清晰</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 清晰</span></span><br><span class="line">insertObject:atIndex:</span><br><span class="line"><span class="comment">// 不清晰， insert 的对象类型和 at 的位置属性没有说明</span></span><br><span class="line">insert:at:</span><br><span class="line"><span class="comment">// 清晰</span></span><br><span class="line">removeObjectAtIndex:</span><br><span class="line"><span class="comment">// 不清晰， remove 的对象类型没有说明，参数的作用没有说明</span></span><br><span class="line">remove:</span><br></pre></td></tr></table></figure>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>整个工程的命名风格要保持一致性，最好和苹果 SDK 的代码保持统一。不同类中完成相似功能的方法应该叫一样的名字，比如我们总是用 count 来返回集合的个数，不能在 A 类中使用 count 而在 B 类中使用 getNumber 。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>一个典型的 Objective-C 函数应该是这样的：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)writeVideoFrameWithData:(<span class="built_in">NSData</span> *)frameData timeStamp:(<span class="keyword">int</span>)timeStamp &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在 - 和 (void) 之间应该有一个空格，第一个大括号 { 的位置在函数所在行的末尾，同样应该有一个空格。</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span> (<span class="built_in">NSInteger</span>,RunGoalTypeE)&#123;</span><br><span class="line">    kRunGoalTypeNone       = <span class="number">0</span>,    <span class="comment">//无目标</span></span><br><span class="line">    kRunGoalTypeTime       = <span class="number">1</span>,    <span class="comment">//以时间为目标</span></span><br><span class="line">    kRunGoalTypeDistance   = <span class="number">2</span>,    <span class="comment">//以距离为目标</span></span><br><span class="line">    kRunGoalTypeCalori     = <span class="number">3</span>,    <span class="comment">//以消耗卡路里为目标</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>定义bit map：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">NSWindowMask</span>) &#123;</span><br><span class="line">    <span class="built_in">NSBorderlessWindowMask</span>      = <span class="number">0</span>,</span><br><span class="line">    <span class="built_in">NSTitledWindowMask</span>          = <span class="number">1</span> &lt;&lt; <span class="number">0</span>,</span><br><span class="line">    <span class="built_in">NSClosableWindowMask</span>        = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,</span><br><span class="line">    <span class="built_in">NSMiniaturizableWindowMask</span>  = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,</span><br><span class="line">    <span class="built_in">NSResizableWindowMask</span>       = <span class="number">1</span> &lt;&lt; <span class="number">3</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="类名和协议"><a href="#类名和协议" class="headerlink" title="类名和协议"></a>类名和协议</h2><p>类名以大写字母开头，应该包含一个名词来表示它代表的对象类型，同时可以加上必要的前缀，比如NSString, NSDate, NSScanner, NSApplication等等。</p>
+<p>好的协议名应能立刻让人分辨出这不是一个类名，除了以常用的 delegate、dateSource 做结尾外，还可以使用 …ing 这种形式，如：NSCoding、NSCopying、NSLocking。</p>
+<h2 id="Property和变量"><a href="#Property和变量" class="headerlink" title="Property和变量"></a>Property和变量</h2><p>属性和对象的存取方法相关联，属性的第一个字母小写，后续单词首字母大写，不必添加前缀。属性按功能命名成名词或者动词：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//名词属性</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动词属性</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>) <span class="built_in">BOOL</span> showsAlpha;</span><br></pre></td></tr></table></figure></p>
+<p>不过我们定义了一种稍微复杂点的方式，不过这种方式更加明确，如:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">readwrite</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *title;</span><br></pre></td></tr></table></figure></p>
+<p>这样的话，变量的每个关键属性都加上，非常的明确，以及代码的可读性更好，缺点就是写的时候代码稍微会多点.</p>
+<p>属性也可以命名成形容词，这时候通常会指定一个带有is前缀的get方法来提高可读性：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, getter=isEditable,<span class="keyword">assign</span>) <span class="built_in">BOOL</span> editable;</span><br></pre></td></tr></table></figure></p>
+<p>最后说下类的内置变量，我们一般推荐用property来表示，但是有些情况还是会用instance var,这种情况我们遵从apple的官方规范，我们会以下划线开头<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">AddViewController</span> : <span class="title">UIViewController</span></span>&#123;</span><br><span class="line">    <span class="built_in">UIView</span>* _slideLine;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样的好处是为了和property区分开来，在命名上不容易重复.</p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>使用const定义浮点型或者单个的整数型常量，如果要定义一组相关的整数常量，应该优先使用枚举。常量的命名规范和函数相同：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> <span class="built_in">NSLightGray</span>;</span><br></pre></td></tr></table></figure></p>
+<p>不要使用#define宏来定义常量，如果是整型常量，尽量使用枚举，浮点型常量，使用const定义。#define通常用来给编译器决定是否编译某块代码，比如常用的：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#ifdef DEBUG</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="通知命名"><a href="#通知命名" class="headerlink" title="通知命名"></a>通知命名</h2><p>基本命名格式是：[与通知相关的类名] + [Did | Will] + [UniquePartOfName] + Notification，例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSApplicationDidBecomeActiveNotification</span><br><span class="line">NSWindowDidMiniaturizeNotification</span><br><span class="line">NSTextViewDidChangeSelectionNotification</span><br><span class="line">NSColorPanelColorDidChangeNotification</span><br></pre></td></tr></table></figure></p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>好的代码应该是“自解释”（self-documenting）的，但仍然需要详细的注释来说明参数的意义、返回值、功能以及可能的副作用。</p>
+<p>方法、函数、类、协议、类别的定义都需要注释，推荐采用Apple的标准注释风格，好处是可以在引用的地方alt+点击自动弹出注释，非常方便。</p>
+<p>一些良好的注释：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> *  Create a new preconnector to replace the old one with given mac address.</span><br><span class="line"> *  NOTICE: We DO NOT stop the old preconnector, so handle it by yourself.</span><br><span class="line"> *</span><br><span class="line"> *  @param type       Connect type the preconnector use.</span><br><span class="line"> *  @param macAddress Preconnector's mac address.</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)refreshConnectorWithConnectType:(IPCConnectType)type  Mac:(<span class="built_in">NSString</span> *)macAddress;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  Stop current preconnecting when application is going to background.</span><br><span class="line"> */</span></span><br><span class="line">-(<span class="keyword">void</span>)stopRunning;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> *  Get the COPY of cloud device with a given mac address.</span><br><span class="line"> *</span><br><span class="line"> *  @param macAddress Mac address of the device.</span><br><span class="line"> *</span><br><span class="line"> *  @return Instance of IPCCloudDevice.</span><br><span class="line"> */</span></span><br><span class="line">-(IPCCloudDevice *)getCloudDeviceWithMac:(<span class="built_in">NSString</span> *)macAddress;</span><br><span class="line"></span><br><span class="line"><span class="comment">// A delegate for NSApplication to handle notifications about app</span></span><br><span class="line"><span class="comment">// launch and shutdown. Owned by the main app controller.</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyAppDelegate</span> : <span class="title">NSObject</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>如果在注释中要引用参数名或者方法函数名，使用||将参数或者方法括起来以避免歧义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// Sometimes we need |count| to be less than zero.</span><br><span class="line"></span><br><span class="line">// Remember to call |StringWithoutSpaces(&quot;foo bar baz&quot;)|</span><br></pre></td></tr></table></figure></p>
+<p><strong>定义在头文件里的接口方法、属性必须要有注释！</strong></p>
+<hr>
+<p><strong>以上代码规范是从网上摘取过来的，这些大部分我们比较认同，所以我们团队也会按照以上的代码规范来执行，不过在开发的过程中会不断的总结和改进，所以我们会持续更新规范。</strong></p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://github.com/Chinamobo/iOS-Team-Norms/blob/master/CodeStyle.md" target="_blank" rel="external">https://github.com/Chinamobo/iOS-Team-Norms/blob/master/CodeStyle.md</a><br><a href="https://github.com/QianKaiLu/Objective-C-Coding-Guidelines-In-Chinese" target="_blank" rel="external">https://github.com/QianKaiLu/Objective-C-Coding-Guidelines-In-Chinese</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/05/30/iOS-specifications/" data-id="cipy536y5000c6gruim6j0gmb" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/05/30/iOS-specifications/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Specifications/">Specifications</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/26/cocos2d-web-image/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Cocos2d-iOS网络加载图片
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/29/iOS-MVC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS之MVC</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/26/cocos2d-web-image/">Cocos2d-iOS网络加载图片</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/21/NSSet/">NSSet</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2016/05/30/iOS-specifications/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
