@@ -18,7 +18,7 @@
 根据指定url即可返回图片
 解决重复下载，">
 <meta property="og:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/preview.png">
-<meta property="og:updated_time" content="2016-06-28T15:09:59.000Z">
+<meta property="og:updated_time" content="2016-06-29T02:14:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cocos2d-iOS网络加载图片">
 <meta name="twitter:description" content="由于最近的工作都是和Cocos2d相关的，所以最近都是出于边学边用的状态，最近遇到一个比较常见的问题，Cocos2d没有网络加载图片的第三方库，找了一圈也没有发现，以前在做应用的时候比较常用的是SDWebImage或者是AFNetworking都可以满足我的需求，所以在这种情况下，我们只能自己写一个类似于这种功能的异步加载图片的Library。
@@ -134,12 +134,12 @@
 <p>这是其中一段处理相同URL的处理，如果URL相同将保存在集合中，由其中一个返回结果的response统一集中返回结果</p>
 <h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>在代码中，使用的例子如下:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CCSprite* pic = [CCSprite emptySprite];</span><br><span class="line">[pic asyncDownloadPic:<span class="string">@"http://www.google.com/pic.jpg"</span>];</span><br><span class="line">pic.anchorPoint = ccp(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">[cell addChild:pic];</span><br></pre></td></tr></table></figure></p>
 <p>最终的效果是这样的:<br><img src="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/preview.png" alt="SpriteDemo"></p>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p><a href="Github">https://github.com/jezzmemo/Cocos2d-iOS-WebImage</a></p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p><a href="https://github.com/jezzmemo/Cocos2d-iOS-WebImage" target="_blank" rel="external">https://github.com/jezzmemo/Cocos2d-iOS-WebImage</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/" data-id="cipy536xo00006gru7lbsa43x" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/" data-id="ciq08zvnw0002y8zpj60u1dxl" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/#disqus_thread" class="article-comment-link">留言</a>
       
