@@ -69,6 +69,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS-cache-reference" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/21/iOS-cache-reference/" class="article-date">
+  <time datetime="2016-07-21T14:39:18.000Z" itemprop="datePublished">2016-07-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。</p>
+<p>清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效果.</p>
+<h2 id="如何检查对象有没被外部引用"><a href="#如何检查对象有没被外部引用" class="headerlink" title="如何检查对象有没被外部引用"></a>如何检查对象有没被外部引用</h2><p>首先我们先思考下，一般的缓存清理步骤如下：</p>
+<ol>
+<li>缓存存储在我们指定的集合当中</li>
+<li>然后我们遍历整个缓存,逐个检查是否被引用</li>
+<li>如果没有被引用，将这个缓存清除，如果还在引用状态，将继续驻留在内存当中</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2016/07/21/iOS-cache-reference/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/" data-id="ciqwfvz030008wirucapbm02d" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/">reference</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-cocos2d-web-image" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/26/cocos2d-web-image/" class="article-date">
@@ -110,7 +166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/" data-id="ciqweel0s0001ttru73iseh4t" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/" data-id="ciqwfvz010006wirucrkcfmac" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/06/26/cocos2d-web-image/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -165,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/05/30/iOS-specifications/" data-id="ciqweel1r000ottrukfyd2lax" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/05/30/iOS-specifications/" data-id="ciqwfvz08000cwirutzwf7o7p" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/05/30/iOS-specifications/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -214,7 +270,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/04/29/iOS-MVC/" data-id="ciqweel1m000mttru0g0nazsj" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/04/29/iOS-MVC/" data-id="ciqwfvz06000awiru1f4qizfm" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/04/29/iOS-MVC/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -264,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/04/23/Retain-cycle/" data-id="ciqweel1j000kttrut2sxyh9z" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/04/23/Retain-cycle/" data-id="ciqwfvyzn0000wirub6tqt0gf" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/04/23/Retain-cycle/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -313,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/04/21/NSSet/" data-id="ciqweel1e000ittrucw63jvnb" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/04/21/NSSet/" data-id="ciqwfvyzt0002wirucbr83vam" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/04/21/NSSet/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -362,7 +418,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/04/17/RunLoop/" data-id="ciqweel0m0000ttruysar8g6f" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/04/17/RunLoop/" data-id="ciqwfvyzz0005wirujef6e2of" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/04/17/RunLoop/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -395,7 +451,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
     </div>
   </div>
 
@@ -405,7 +461,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
     </div>
   </div>
 
@@ -414,7 +470,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
     </div>
   </div>
 
@@ -425,6 +481,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
+          </li>
         
           <li>
             <a href="/2016/06/26/cocos2d-web-image/">Cocos2d-iOS网络加载图片</a>
@@ -440,10 +500,6 @@
         
           <li>
             <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
-          </li>
-        
-          <li>
-            <a href="/2016/04/21/NSSet/">NSSet</a>
           </li>
         
       </ul>

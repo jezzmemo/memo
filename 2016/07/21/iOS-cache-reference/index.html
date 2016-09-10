@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>缓存对象有没被引用 | iMemo的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。
+清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缓存对象有没被引用">
+<meta property="og:url" content="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/index.html">
+<meta property="og:site_name" content="iMemo的技术博客">
+<meta property="og:description" content="在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。
+清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效">
+<meta property="og:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/images/Nm0D5v8.png">
+<meta property="og:updated_time" content="2016-09-10T15:45:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="缓存对象有没被引用">
+<meta name="twitter:description" content="在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。
+清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/images/Nm0D5v8.png">
+  
+    <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">iMemo的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS-cache-reference" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/21/iOS-cache-reference/" class="article-date">
+  <time datetime="2016-07-21T14:39:18.000Z" itemprop="datePublished">2016-07-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      缓存对象有没被引用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。</p>
+<p>清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效果.</p>
+<h2 id="如何检查对象有没被外部引用"><a href="#如何检查对象有没被外部引用" class="headerlink" title="如何检查对象有没被外部引用"></a>如何检查对象有没被外部引用</h2><p>首先我们先思考下，一般的缓存清理步骤如下：</p>
+<ol>
+<li>缓存存储在我们指定的集合当中</li>
+<li>然后我们遍历整个缓存,逐个检查是否被引用</li>
+<li>如果没有被引用，将这个缓存清除，如果还在引用状态，将继续驻留在内存当中</li>
+</ol>
+<a id="more"></a>
+<p>根据以上的需求分析，我们有一个比较清晰的目标，如下:</p>
+<ul>
+<li>缓存对象本身是一直存在的，如果没有显示的释放动作，将一直驻留在内存.</li>
+<li>我们需要一个对象指向这个缓存，缓存本身的所有方法，通过这个新的对象来执行.</li>
+<li>这个新的对象通过weak的方式来联系，当外部有引用(strong或copy)这个对象时，他的retaincount会增加，这样的话，他引用的对象是不会被主动清除的.</li>
+<li>最后就是如果外部没有引用这个新对象，它将为空(nil)</li>
+</ul>
+<p>从上面分析的结果来看，我们用一张形象的图来表示，这样比较直观:</p>
+<p><img src="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/images/Nm0D5v8.png" alt="Cache"></p>
+<p>在这里我用cocos2d的代码作为演示,下面我们用最简洁的代码，来表示如图所示的效果:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Texture</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(atomic,<span class="keyword">readonly</span>,<span class="keyword">weak</span>)TextureProxy* proxy;</span><br><span class="line"><span class="keyword">@property</span>(atomic,<span class="keyword">readonly</span>)<span class="built_in">BOOL</span> hasProxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)hasProxy</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">@synchronized</span>(<span class="keyword">self</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// NSLog(@"hasProxy: %p", self);</span></span><br><span class="line">		<span class="keyword">return</span>(_proxy != <span class="literal">nil</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (TextureProxy *)proxy</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">@synchronized</span>(<span class="keyword">self</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		__<span class="keyword">strong</span> TextureProxy *proxy = _proxy;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (_proxy == <span class="literal">nil</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			proxy = [[TextureProxy alloc] init:<span class="keyword">self</span>];</span><br><span class="line">			_proxy = proxy;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span>(proxy);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>TextureProxy作用就是代理，把当前自己给这个代理，这个代理代表着自己，这里只是重写了消息转发，<br>找不到消息后，都转发到Texture即可，达到代理的作用.</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@class</span> <span class="title">Texture</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">TextureProxy</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line">-(instancetype)init:(Texture*)target;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)testPrint;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-(instancetype)init:(Texture*)target&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">self</span> = [ <span class="keyword">super</span> init])&#123;</span><br><span class="line">		_target = target;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Forward class checks for assertions.</span></span><br><span class="line">-(<span class="built_in">BOOL</span>)isKindOfClass:(Class)aClass &#123;<span class="keyword">return</span> [_target isKindOfClass:aClass];&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Let the rest fall back to a slow forwarded path.</span></span><br><span class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//    CCLOGINFO(@"Forwarding selector [%@ %@]", NSStringFromClass([_target class]), NSStringFromSelector(aSelector));</span></span><br><span class="line">	<span class="comment">//		CCLOGINFO(@"If there are many of these calls, we should add concrete forwarding methods. (TODO remove logging before release)");</span></span><br><span class="line">	<span class="keyword">return</span>(_target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)dealloc</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSLog</span>(<span class="string">@"Proxy for %p deallocated."</span>, _target);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Delegate和Proxy区别"><a href="#Delegate和Proxy区别" class="headerlink" title="Delegate和Proxy区别"></a>Delegate和Proxy区别</h2><p>在这里我们顺便解释下这两个的区别，因为Delegate在iOS随处可见，但是Proxy对于用的比较少，所以我们一定要明白这两个的区别在哪，有利于更好的使用它们.</p>
+<p>Delegate:<br>根据语法的规则，我们先是定义一个协议，再给想要实现的类，一般我们直接面对实现的人.</p>
+<p>Proxy:<br>先举一个通俗的例子，在建筑领域，我们需要做一个房子，可以找到包工头，然后包工头再找到具体做事的人，在刚才的例子里，包工头就是代理.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/" data-id="ciqwfvz030008wirucapbm02d" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/">reference</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/26/cocos2d-web-image/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Cocos2d-iOS网络加载图片</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/cocos2d-web-image/">Cocos2d-iOS网络加载图片</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/23/Retain-cycle/">Retain cycle</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2016/07/21/iOS-cache-reference/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
