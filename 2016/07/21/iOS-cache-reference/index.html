@@ -14,7 +14,7 @@
 <meta property="og:description" content="在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。
 清除多余的缓存是我们常见的手段，但是我们不确定，当前这个数据是否在被用，如果我们直接删除，会导致当前运行的程序出问题，因为你引用的数据已经被删除，会出现各种奇怪的问题，所以我们在清除的时候，要确保缓存的数据没有被引用，这样才能安全的清除在内存当中的缓存，以达到回收内存的效">
 <meta property="og:image" content="https://raw.githubusercontent.com/jezzmemo/Cocos2d-iOS-WebImage/master/images/Nm0D5v8.png">
-<meta property="og:updated_time" content="2016-09-10T15:45:31.000Z">
+<meta property="og:updated_time" content="2016-09-11T03:03:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="缓存对象有没被引用">
 <meta name="twitter:description" content="在写这篇文章之前，我是没有注意到这个细节的，也很少思考这个问题，就是我们在缓存数据的时候，在内存紧张的时候我们怎么处理他们呢。
@@ -129,12 +129,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/" data-id="ciqwfvz030008wirucapbm02d" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/" data-id="cisy1d44z00064iru5kuuxq7v" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/07/21/iOS-cache-reference/#disqus_thread" class="article-comment-link">留言</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/">reference</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/">cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/">reference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/retaincount/">retaincount</a></li></ul>
 
     </footer>
   </div>
@@ -177,7 +177,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
     </div>
   </div>
 
@@ -187,7 +187,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
     </div>
   </div>
 
