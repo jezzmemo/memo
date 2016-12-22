@@ -3,22 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>iOS之MVC | iMemo的技术博客</title>
+  <title>NSAttributedString的坑 | iMemo的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
+  <meta name="description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS之MVC">
-<meta property="og:url" content="http://blog.imemo8.com/2016/04/29/iOS-MVC/index.html">
+<meta property="og:title" content="NSAttributedString的坑">
+<meta property="og:url" content="http://blog.imemo8.com/2016/12/20/NSAttributedString/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
-<meta property="og:description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
-<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png">
-<meta property="og:image" content="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Art/cocoa_mvc.gif">
-<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152425723031.png">
-<meta property="og:updated_time" content="2016-05-04T15:40:04.000Z">
+<meta property="og:description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
+<meta property="og:updated_time" content="2016-12-22T15:48:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS之MVC">
-<meta name="twitter:description" content="最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。">
-<meta name="twitter:image" content="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png">
+<meta name="twitter:title" content="NSAttributedString的坑">
+<meta name="twitter:description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
   
     <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
   
@@ -72,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-iOS-MVC" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-NSAttributedString" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/04/29/iOS-MVC/" class="article-date">
-  <time datetime="2016-04-28T16:14:50.000Z" itemprop="datePublished">2016-04-29</time>
+    <a href="/2016/12/20/NSAttributedString/" class="article-date">
+  <time datetime="2016-12-20T14:53:14.000Z" itemprop="datePublished">2016-12-20</time>
 </a>
     
   <div class="article-category">
@@ -90,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      iOS之MVC
+      NSAttributedString的坑
     </h1>
   
 
@@ -98,35 +97,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近一直在关注架构这块的内容以及思考，首先我们要明确一个问题，我们为什么要关注架构，架构给我们带来的好处?<br>以下回答都是基于我个人的理解，架构的产生就是为了把复杂问题简单化，在多个人协作的时候高效率的运作，以及后期维护的易用性和可靠性，假如没有良好的架构设计，我们会在一个复杂的环境中工作,各种问题就凸显出来，Bug的几率就很高，后期的维护工作就会变得很差。<br><a id="more"></a></p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><a href="https://itunes.apple.com/cn/app/ai-mo-ri-ji-jian-jie-bian/id912688184?mt=8" target="_blank" rel="external">爱墨笔记</a>里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSAttributedString</span> alloc] initWithData:originData </span><br><span class="line">options:@&#123; <span class="built_in">NSDocumentTypeDocumentAttribute</span>: <span class="built_in">NSHTMLTextDocumentType</span> &#125; </span><br><span class="line">documentAttributes:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
+<p>其实是一段很普通的代码，但是通过Bug的监测，我们会发现这句话会偶尔闪退，为了解决这个问题查阅了很多资料,网络上对这个的讨论还是比较多的，证明确实存在一些问题，首先我们需要了解的是NSAttributedString实现原理是什么。</p>
+<a id="more"></a>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>首先我们引用官方对NSAttributedString initWithData方法的解释:</p>
 <blockquote>
-<p>provides a high-level MVC architecture and automates communication between models,views, and controllers.</p>
+<p>The HTML importer should not be called from a background thread (that is, the options dictionary includes NSDocumentTypeDocumentAttribute with a value of NSHTMLTextDocumentType). It will try to synchronize with the main thread, fail, and time out. Calling it from the main thread works (but can still time out if the HTML contains references to external resources, which should be avoided at all costs). The HTML import mechanism is meant for implementing something like markdown (that is, text styles, colors, and so on), not for general HTML import.</p>
 </blockquote>
-<p>为什么我这次专门讨论MVC架构，因为的这种架构很简单，很容易理解和接受，让大多数的开发人员快速的上手并应用到实际的项目当中,还有一种说法就是,MVC是一种抽象级别很高的，其他的MVP,MVVM等等其他的架构方式，都是基于MVC这种模式演变过来的，所以MVC很值得我们去研究和学习.</p>
-<h2 id="传统MVC"><a href="#传统MVC" class="headerlink" title="传统MVC"></a>传统MVC</h2><p><img src="http://cc.cocimg.com/api/uploads/20160107/1452152223816977.png" alt="MVC"></p>
-<p>根据以上图示，MVC三者之间都有通信，他们之间的藕合度很高，所以这种模式不被iOS所推荐</p>
-<h2 id="Cocoa的MVC"><a href="#Cocoa的MVC" class="headerlink" title="Cocoa的MVC"></a>Cocoa的MVC</h2><p><img src="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Art/cocoa_mvc.gif" alt="Cocoa MVC"></p>
-<p>Controller是Model和View之间的协作作用，Model和View之间是不通讯的，他们两之间的协作只能通过Controller来作为中间者来通讯，这样的好处是View和Model是独立的，他们之间的复用度比较高，以及测试性也比较强.</p>
-<h2 id="实际的Cocoa的MVC"><a href="#实际的Cocoa的MVC" class="headerlink" title="实际的Cocoa的MVC"></a>实际的Cocoa的MVC</h2><p><img src="http://cc.cocimg.com/api/uploads/20160107/1452152425723031.png" alt="Real MVC"></p>
-<p>根据实际情况里的iOS里的MVC,View和Controller之间是耦合的，这样带来的问题就是Controller负责的任务比较多，比如：</p>
-<ul>
-<li>网络请求</li>
-<li>UI 的调整和组合</li>
-<li>业务逻辑</li>
-<li>Delegate、Data source</li>
-</ul>
-<p>所以Massive View Controller就是这样出现的，基于这种情况，测试性其实只有Model是独立可测试性的，View和Controller是耦合的，可测试性很差.</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>根据以上情况我们可以总结，iOS的MVC就开发速度来说是一个不错的选择方案，因为学习成本低，团队都能容易接受这种架构，比如你的团队在磨合阶段选择这个也是一个不错的选择，不过问题也很明显，就是Controller的臃肿，工程在不断的庞大过程中表现的很突出，所以大家要根据大家的实际情况来选择最适合自己的方案。</strong></p>
+<p>从以上解释能看出，我们使用的时候不能用多线程，只能用主线程，否则会出问题，<strong>但是我们经过实测，在iOS8.3以下会Crash,iOS8.3以上就没问题，所以这个问题大家要注意了</strong>。</p>
+<p>第二个需要弄明白的是他是如何将HTML渲染出来，他是通过Webkit要做渲染的，通过DOM这种方式来完成最终渲染，所以这种方式的性能不会很理想。<br>为什么会知道是通过Webkit渲染的，是通过报错的Stack来确认的:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> WebKitLegacy	-[_WebSafeForwarder forwardInvocation:] + <span class="number">132</span></span><br><span class="line"><span class="number">2</span> CoreFoundation	____forwarding___ + <span class="number">404</span></span><br><span class="line"><span class="number">3</span> CoreFoundation	_CF_forwarding_prep_0 + <span class="number">92</span></span><br><span class="line"><span class="number">4</span> CoreFoundation	___invoking___ + <span class="number">144</span></span><br><span class="line"><span class="number">5</span> CoreFoundation	-[NSInvocation invoke] + <span class="number">284</span></span><br><span class="line"><span class="number">6</span> WebCore	HandleDelegateSource(<span class="keyword">void</span>*) + <span class="number">108</span></span><br><span class="line"><span class="number">7</span> CoreFoundation	___CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + <span class="number">24</span></span><br><span class="line"><span class="number">8</span> CoreFoundation	___CFRunLoopDoSources0 + <span class="number">412</span></span><br><span class="line"><span class="number">9</span> CoreFoundation	___CFRunLoopRun + <span class="number">804</span></span><br><span class="line"><span class="number">10</span> CoreFoundation	CFRunLoopRunSpecific + <span class="number">444</span></span><br><span class="line"><span class="number">11</span> UIFoundation	-[NSHTMLReader _loadUsingWebKit] + <span class="number">1860</span></span><br><span class="line"><span class="number">12</span> UIFoundation	-[NSHTMLReader attributedString] + <span class="number">28</span></span><br><span class="line"><span class="number">13</span> UIFoundation	_NSReadAttributedStringFromURLOrData + <span class="number">4688</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>根据以上的问题分析，在频繁的使用NSAttributedString的情况下，他的可靠性和性能都是不行的，所以我个人比较推荐以下两个方案:</p>
+<h4 id="纯手动的方式解析HTML转化成文本"><a href="#纯手动的方式解析HTML转化成文本" class="headerlink" title="纯手动的方式解析HTML转化成文本"></a>纯手动的方式解析HTML转化成文本</h4><p>这种方式就是通过解析标签，拿出自己想要的，这种方案仅限将HTML转化成纯文本<br><a href="https://github.com/renegade78/MWFeedParser/blob/master/Classes/NSString%2BHTML.h" target="_blank" rel="external">示例代码</a></p>
+<h4 id="DTCoreText"><a href="#DTCoreText" class="headerlink" title="DTCoreText"></a>DTCoreText</h4><p>是一个基于CoreText的第三方库，在文字处理能力很强大，他的不是基于Webkit的，所以性能是很大的优点,缺点就是功能过于强大，其实我们只用到了已小部分功能，而且我们要入两个Framework,给程序的启动增加了一定的时间.</p>
+<p>代码示例:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *htmlStripped = </span><br><span class="line">[[<span class="built_in">NSAttributedString</span> attributedStringWithHTML:DATA_FOR_MY_HTML options:<span class="literal">nil</span>] string];</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/04/29/iOS-MVC/" data-id="ciwxo72vo000cstruk0gqua82" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/12/20/NSAttributedString/" data-id="ciwxo72v00000strutbr7tm0o" class="article-share-link">Share</a>
       
-        <a href="http://blog.imemo8.com/2016/04/29/iOS-MVC/#disqus_thread" class="article-comment-link">留言</a>
+        <a href="http://blog.imemo8.com/2016/12/20/NSAttributedString/#disqus_thread" class="article-comment-link">留言</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webkit/">Webkit</a></li></ul>
 
     </footer>
   </div>
@@ -134,19 +128,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/05/30/iOS-specifications/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          iOS开发规范
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/04/23/Retain-cycle/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/07/21/iOS-cache-reference/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Retain cycle</div>
+      <div class="article-nav-title">缓存对象有没被引用</div>
     </a>
   
 </nav>
@@ -260,7 +245,7 @@
 <script>
   var disqus_shortname = 'imemo8';
   
-  var disqus_url = 'http://blog.imemo8.com/2016/04/29/iOS-MVC/';
+  var disqus_url = 'http://blog.imemo8.com/2016/12/20/NSAttributedString/';
   
   (function(){
     var dsq = document.createElement('script');
