@@ -5,18 +5,18 @@
   
   <title>NSAttributedString的坑 | iMemo的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+  <meta name="description" content="问题爱墨日记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
 123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSAttributedString的坑">
 <meta property="og:url" content="http://blog.imemo8.com/2016/12/20/NSAttributedString/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
-<meta property="og:description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+<meta property="og:description" content="问题爱墨日记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
 123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
-<meta property="og:updated_time" content="2016-12-22T15:48:22.000Z">
+<meta property="og:updated_time" content="2017-02-25T14:52:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSAttributedString的坑">
-<meta name="twitter:description" content="问题爱墨笔记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
+<meta name="twitter:description" content="问题爱墨日记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
 123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
   
     <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
@@ -97,7 +97,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><a href="https://itunes.apple.com/cn/app/ai-mo-ri-ji-jian-jie-bian/id912688184?mt=8" target="_blank" rel="external">爱墨笔记</a>里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:</p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><a href="https://itunes.apple.com/cn/app/ai-mo-ri-ji-jian-jie-bian/id912688184?mt=8" target="_blank" rel="external">爱墨日记</a>里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="built_in">NSAttributedString</span> alloc] initWithData:originData </span><br><span class="line">options:@&#123; <span class="built_in">NSDocumentTypeDocumentAttribute</span>: <span class="built_in">NSHTMLTextDocumentType</span> &#125; </span><br><span class="line">documentAttributes:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
 <p>其实是一段很普通的代码，但是通过Bug的监测，我们会发现这句话会偶尔闪退，为了解决这个问题查阅了很多资料,网络上对这个的讨论还是比较多的，证明确实存在一些问题，首先我们需要了解的是NSAttributedString实现原理是什么。</p>
 <a id="more"></a>
@@ -115,7 +115,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/12/20/NSAttributedString/" data-id="ciwxo72v00000strutbr7tm0o" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/12/20/NSAttributedString/" data-id="cizmsb9wo00008cruxbpmmbty" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/12/20/NSAttributedString/#disqus_thread" class="article-comment-link">留言</a>
       
@@ -127,6 +127,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/02/25/apache-https/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Apache配置HTTPS
+        
+      </div>
+    </a>
   
   
     <a href="/2016/07/21/iOS-cache-reference/" id="article-nav-older" class="article-nav-link-wrap">
@@ -153,7 +162,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
     </div>
   </div>
 
@@ -163,7 +172,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
     </div>
   </div>
 
@@ -173,7 +182,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
     </div>
   </div>
 
@@ -182,7 +191,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
     </div>
   </div>
 
@@ -193,6 +202,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/02/25/apache-https/">Apache配置HTTPS</a>
+          </li>
         
           <li>
             <a href="/2016/12/20/NSAttributedString/">NSAttributedString的坑</a>
@@ -210,10 +223,6 @@
             <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
           </li>
         
-          <li>
-            <a href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -226,7 +235,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 Jezz<br>
+      &copy; 2017 Jezz<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

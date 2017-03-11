@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Apache配置HTTPS | iMemo的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在全面HTTPS的今天，出去说自己的网络协议还是HTTP,都没脸见人，正好借机学习下加密的过程，以及HTTPS握手的过程.不过今天我只是简单记录下配置的过程，或者遇到的问题，我会在单独的一篇来专门写HTTPS握手的详细细节，所以本篇就不写了.iOS即将强制使用HTTPS了，所以要赶在iOS强制之前，要把这些工作都准备好，以下是官方的通知:
+
+App Transport Security (ATS)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache配置HTTPS">
+<meta property="og:url" content="http://blog.imemo8.com/2017/02/25/apache-https/index.html">
+<meta property="og:site_name" content="iMemo的技术博客">
+<meta property="og:description" content="在全面HTTPS的今天，出去说自己的网络协议还是HTTP,都没脸见人，正好借机学习下加密的过程，以及HTTPS握手的过程.不过今天我只是简单记录下配置的过程，或者遇到的问题，我会在单独的一篇来专门写HTTPS握手的详细细节，所以本篇就不写了.iOS即将强制使用HTTPS了，所以要赶在iOS强制之前，要把这些工作都准备好，以下是官方的通知:
+
+App Transport Security (ATS)">
+<meta property="og:updated_time" content="2017-03-11T15:03:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache配置HTTPS">
+<meta name="twitter:description" content="在全面HTTPS的今天，出去说自己的网络协议还是HTTP,都没脸见人，正好借机学习下加密的过程，以及HTTPS握手的过程.不过今天我只是简单记录下配置的过程，或者遇到的问题，我会在单独的一篇来专门写HTTPS握手的详细细节，所以本篇就不写了.iOS即将强制使用HTTPS了，所以要赶在iOS强制之前，要把这些工作都准备好，以下是官方的通知:
+
+App Transport Security (ATS)">
+  
+    <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">iMemo的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-apache-https" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/25/apache-https/" class="article-date">
+  <time datetime="2017-02-25T14:31:52.000Z" itemprop="datePublished">2017-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Server/">Server</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Apache配置HTTPS
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在全面HTTPS的今天，出去说自己的网络协议还是HTTP,都没脸见人，正好借机学习下加密的过程，以及HTTPS握手的过程.<br>不过今天我只是简单记录下配置的过程，或者遇到的问题，我会在单独的一篇来专门写HTTPS握手的详细细节，所以本篇就不写了.<br>iOS即将强制使用HTTPS了，所以要赶在iOS强制之前，要把这些工作都准备好，以下是官方的通知:</p>
+<blockquote>
+<p>App Transport Security (ATS), introduced in iOS 9 and OS X v10.11, improves user security and privacy by requiring apps to use secure network connections over HTTPS. At WWDC 2016 we announced that apps submitted to the App Store will be required to support ATS at the end of the year. To give you additional time to prepare, this deadline has been extended and we will provide another update when a new deadline is confirmed. </p>
+</blockquote>
+<p><a href="https://developer.apple.com/news/?id=12212016b" target="_blank" rel="external">Apple官方通知</a></p>
+<p>在开始动手之前，我们需要知道我们这项工作给我们带来的好处，这样我们会更加的清晰的认识到，我们这项工作的必要性。<br>HTTPS的优点:</p>
+<ul>
+<li>有效的保护你的网络通讯安全</li>
+<li>能减少恶意攻击和钓鱼</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>HTTPS协议会使页面的加载时间延长，增加设备的耗电</li>
+<li>成本方面，需要额外的购买证书，不过现在免费的也有，在接下来的配置环节，我们推荐是Let’s encrypt<a id="more"></a>
+</li>
+</ul>
+<h2 id="检测Apache是否安装ssl模块"><a href="#检测Apache是否安装ssl模块" class="headerlink" title="检测Apache是否安装ssl模块"></a>检测Apache是否安装ssl模块</h2><p>用以下命令能查看已经安装的模块:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./apachectl -t -D DUMP_MODULES</span><br></pre></td></tr></table></figure></p>
+<p>结果如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Loaded Modules:</span><br><span class="line"> core_module (static)</span><br><span class="line"> authn_file_module (static)</span><br><span class="line"> authn_default_module (static)</span><br><span class="line"> authz_host_module (static)</span><br><span class="line"> authz_groupfile_module (static)</span><br><span class="line"> authz_user_module (static)</span><br><span class="line"> authz_default_module (static)</span><br><span class="line"> auth_basic_module (static)</span><br><span class="line"> include_module (static)</span><br><span class="line"> filter_module (static)</span><br><span class="line"> deflate_module (static)</span><br><span class="line"> log_config_module (static)</span><br><span class="line"> env_module (static)</span><br><span class="line"> expires_module (static)</span><br><span class="line"> headers_module (static)</span><br><span class="line"> setenvif_module (static)</span><br><span class="line"> version_module (static)</span><br><span class="line"> ssl_module (static)</span><br><span class="line"> mpm_prefork_module (static)</span><br><span class="line"> http_module (static)</span><br><span class="line"> mime_module (static)</span><br><span class="line"> status_module (static)</span><br><span class="line"> autoindex_module (static)</span><br><span class="line"> asis_module (static)</span><br><span class="line"> cgi_module (static)</span><br><span class="line"> negotiation_module (static)</span><br><span class="line"> dir_module (static)</span><br><span class="line"> actions_module (static)</span><br><span class="line"> alias_module (static)</span><br><span class="line"> rewrite_module (static)</span><br><span class="line"> so_module (static)</span><br><span class="line"> rpaf_module (shared)</span><br><span class="line"> php5_module (shared)</span><br><span class="line">Syntax OK</span><br></pre></td></tr></table></figure></p>
+<p>根据上面显示的<strong>ssl_module (static)</strong>,证明已经安装过了，所以当前不用再安装ssl模块，如果没有安装的朋友，可以通过编译源码或者yum的方式安装</p>
+<h2 id="生成公钥和私钥"><a href="#生成公钥和私钥" class="headerlink" title="生成公钥和私钥"></a>生成公钥和私钥</h2><p>这个环节一定要细心，还需要知道，我们每一步生产的什么东西，这样对你排查错误有非常大的帮助，通过以下命令即可生成证书:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -nodes -newkey rsa:2048  -sha256 -keyout server.key -subj &quot;/&quot; -reqexts SAN -config &lt;(cat /etc/pki/tls/openssl.cnf &lt;(printf &quot;[SAN]\nsubjectAltName=DNS:api.imemo8.com,DNS:w.imemo8.com&quot;)) out server.csr</span><br></pre></td></tr></table></figure></p>
+<p>分别解释下我们在使用openssl中的参数代表的意思:</p>
+<p>req      生成证书签名请求<br>-new      本option产生一个新的CSR, 它会要用户输入创建CSR的一些必须的信息.至于需要哪些信息,是在config文件里面定义好了的.如果-key没有被set, 那么就将根据config文件里的信息先产生一对新的RSA密钥<br>-nodes      本option被set的话,生成的私有密钥文件将不会被加密.<br>-newkey arg      同时生成新的私有密钥文件和CSR文件. 本option是带参数的.如果是产生RSA的私有密钥文件,参数是一个数字, 指明私有密钥bit的长度. 如果是产生DSA的私有密钥文件,参数是DSA密钥参数文件的文件名<br>-sha256      指明签发的证书使用什么哈希算法<br>-keyout      指定输出私有密钥文件名<br>-subj      替换或指定证书申请者的个人信息<br>-reqexts section      这俩个option指定config文件里面的与证书扩展和证书请求扩展有关的俩个section的名字<br>-config      读取openssl.conf模板，再加入我们指定的域名<br>out      生成CSR文件</p>
+<p>另外还有一种就是以交互的形式来生成文件,需要注意 Common Name 必须为你的域名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -nodes -newkey rsa:2048  -sha256 -keyout domain.key -out domain.csr</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置验证服务</strong></p>
+<p>Let’s Encrypt 是在你的服务器上生成一个随机验证文件，再通过创建 CSR 时指定的域名访问，如果可以访问则表明你对这个域名有控制权</p>
+<p>先把 acme-tiny 脚本保存到之前的 ssl 目录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py</span><br></pre></td></tr></table></figure></p>
+<p>账户私钥、CSR 以及验证目录，执行脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python acme_tiny.py --account-key ./domain.key --csr ./domain.csr --acme-dir /www/web/w_imemo8_com/public_html/.well-known/acme-challenge/ &gt; ./domain.crt</span><br></pre></td></tr></table></figure></p>
+<p>–acme-dir 是指生成的文件，然后Let’s Encrypt会去验证这个文件的存在，是认证中的一个环节，验证成功后会生成domain.crt</p>
+<h2 id="配置Apache-HTTPS"><a href="#配置Apache-HTTPS" class="headerlink" title="配置Apache HTTPS"></a>配置Apache HTTPS</h2><p>通过第二步，我们会生成了三个文件，domain.crt，domain.csr,domain.key.</p>
+<p>1.接下来我们先打开httpd.conf的https配置<br>#Secure (SSL/TLS) connections<br>#Include conf/extra/httpd-ssl.conf</p>
+<p>把#Include conf/extra/httpd-ssl.conf的#去掉即可</p>
+<p>2.配置httpd-ssl.conf<br><strong>在这里我们需要重点强调下，因为前面我们把两个域名绑定在一个证书上，所以在我们配置接下来的虚拟站点的时候注意，子域名都是用的同一份证书<br>我们在VirtualHost之前加入NameVirtualHost xxx.xxx.xxx.xxx:443</strong>。</p>
+<p>我在这个地方被apache坑了，我开始是每个子域名都是单独的证书<br>可以我总是只有一个域名可用，另外一个不能工作，后面我就把证书合并了，发现还是不行，最后发现还是自己的配置有问题，记得一定要加NameVirtualHost xxx.xxx.xxx.xxx:443</p>
+<p>然后再编辑虚拟站点:<br>&lt;VirtualHost xxx.xxx.xxx.xxx:443&gt;<br>ServerName xxx.imemo8.com<br>DocumentRoot “/www/web/xxx/public_html”<br>SSLEngine on<br>SSLCertificateFile “/root/ssl/domain.crt”<br>SSLCertificateKeyFile “/root/ssl/domain.key”<br>&lt;/VirtualHost&gt;</p>
+<p>&lt;VirtualHost xxx.xxx.xxx.xxx:443&gt;<br>ServerName xxxx.imemo8.com<br>DocumentRoot “/www/web/xxx/public_html”<br>SSLEngine on<br>SSLCertificateFile “/root/ssl/domain.crt”<br>SSLCertificateKeyFile “/root/ssl/domain.key”<br>&lt;/VirtualHost&gt;</p>
+<p><strong>xxx</strong>是你自己的站点路径和对应的域名，所以根据自己的情况自行修改</p>
+<h2 id="配置系统定时更新证书"><a href="#配置系统定时更新证书" class="headerlink" title="配置系统定时更新证书"></a>配置系统定时更新证书</h2><p>Let’s Encrypt 签发的证书只有 90 天有效期，推荐使用脚本定期更新。例如我就创建了一个 renewCert.sh 并通过 chmod a+x renewCert.sh 赋予执行权限。文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/ssl/</span><br><span class="line">python acme_tiny.py --account-key ./domain.key --csr ./domain.csr --acme-dir /www/web/w_imemo8_com/public_html/.well-known/acme-challenge/ &gt; ./domain.crt</span><br><span class="line">service httpd reload</span><br></pre></td></tr></table></figure></p>
+<p>crontab -e 加入以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 0 1 * * /home/xxx/shell/renew_cert.sh &gt;/dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
+<p>这样以后证书每个月都会自动更新。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2017/02/25/apache-https/" data-id="cizmsb9xf000c8crui3ll3q7m" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2017/02/25/apache-https/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache/">Apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Https/">Https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/20/NSAttributedString/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NSAttributedString的坑</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/02/25/apache-https/">Apache配置HTTPS</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/NSAttributedString/">NSAttributedString的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/26/cocos2d-web-image/">Cocos2d-iOS网络加载图片</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2017/02/25/apache-https/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
