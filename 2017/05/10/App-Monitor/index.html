@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Category: iOS | iMemo的技术博客</title>
+  <title>如何监控移动产品 | iMemo的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="专注于移动开发技术">
-<meta property="og:type" content="website">
-<meta property="og:title" content="iMemo的技术博客">
-<meta property="og:url" content="http://blog.imemo8.com/categories/iOS/index.html">
+  <meta name="description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何监控移动产品">
+<meta property="og:url" content="http://blog.imemo8.com/2017/05/10/App-Monitor/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
-<meta property="og:description" content="专注于移动开发技术">
+<meta property="og:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
+<meta property="og:updated_time" content="2017-05-11T15:38:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iMemo的技术博客">
-<meta name="twitter:description" content="专注于移动开发技术">
+<meta name="twitter:title" content="如何监控移动产品">
+<meta name="twitter:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
   
     <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
   
@@ -67,154 +68,113 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/20/NSAttributedString/" class="archive-article-date">
-  <time datetime="2016-12-20T14:53:14.000Z" itemprop="datePublished">12月 20</time>
+        <section id="main"><article id="post-App-Monitor" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/10/App-Monitor/" class="article-date">
+  <time datetime="2017-05-10T14:01:31.000Z" itemprop="datePublished">2017-05-10</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/运营/">运营</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/20/NSAttributedString/">NSAttributedString的坑</a>
+    <h1 class="article-title" itemprop="name">
+      如何监控移动产品
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/07/21/iOS-cache-reference/" class="archive-article-date">
-  <time datetime="2016-07-21T14:39:18.000Z" itemprop="datePublished">7月 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
-    </h1>
-  
+        <p>最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，<br>但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，<br>在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.<br><a id="more"></a></p>
+<h3 id="热修复方案"><a href="#热修复方案" class="headerlink" title="热修复方案"></a>热修复方案</h3><ul>
+<li>JSPatch</li>
+<li>LuaView</li>
+<li>React Native(RN)</li>
+</ul>
+<h3 id="连续闪退自我修复"><a href="#连续闪退自我修复" class="headerlink" title="连续闪退自我修复"></a>连续闪退自我修复</h3><p>首先分析什么情况会出现反复闪退</p>
+<ul>
+<li>数据库损坏</li>
+<li>文件损坏</li>
+<li>网络数据异常</li>
+<li>代码bug</li>
+</ul>
+<p>通过计数检测App有没反复闪退，如果有闪退通过步骤恢复：<br>1.修复数据库<br>2.删除本地所有数据(如果远程有数据，可以直接删除，如果没有先要备份到网络上，以免丢失用户有价值数据)<br>3.检测有没下发的Patch更新，如果没有，将上次Crash原因上报到系统<br>4.重新进入初始化过程</p>
+<h3 id="Crash报错"><a href="#Crash报错" class="headerlink" title="Crash报错"></a>Crash报错</h3><ul>
+<li>Mach 异常：EXC_CRASH</li>
+<li>UNIX 信号：SIGABRT</li>
+<li>NSException</li>
+</ul>
+<p>iOS的错误处理机制不在本地的讲解中，如果有兴趣可以到<a href="http://mp.weixin.qq.com/s?__biz=MjM5NTIyNTUyMQ==&amp;mid=208483273&amp;idx=1&amp;sn=37ee88e06e7426f59f3074c536370317&amp;scene=21" target="_blank" rel="external">念茜的漫谈 iOS Crash 收集框架</a></p>
+<p>我们将所有的错误列处理，如果出现错误了，我们将错误上传到我们服务器。</p>
+<h2 id="性能监测"><a href="#性能监测" class="headerlink" title="性能监测"></a>性能监测</h2><ul>
+<li>卡顿监测(Runloop机制，监测每次主线程的执行时间)</li>
+<li>页面渲染时间和请求时长</li>
+<li>CPU,内存，FPS，网络负载</li>
+</ul>
+<p>卡顿监测和页面的请求时间是很重要的，因为这很影响用户的体验，而且是很直接的，所以这部分数据是很有价值的.</p>
+<p>CPU:分析那块业务复杂程度，为什么会长时间很高，带来的直接问题就是用户响应慢，耗电量快<br>内存:主要用来分析泄露以及不恰当的内存分配方式<br>FPS:用来反映的流畅程度<br>网络负载:反映App的网络使用情况，不论是bug，还是流量监控</p>
+<h2 id="业务监测"><a href="#业务监测" class="headerlink" title="业务监测"></a>业务监测</h2><ul>
+<li><p>数据异常<br>如:书本打不开，下载经常失败</p>
+</li>
+<li><p>功能异常<br>如:没有按照自己既定的逻辑运行</p>
+</li>
+</ul>
+<h2 id="自动化测试监测"><a href="#自动化测试监测" class="headerlink" title="自动化测试监测"></a>自动化测试监测</h2><ul>
+<li>根据自己的业务，定制制动化测试计划，让软件一直处于运行状态，从而监测软件的运行健壮性和业务问题</li>
+</ul>
+<h2 id="如果发送监控数据"><a href="#如果发送监控数据" class="headerlink" title="如果发送监控数据"></a>如果发送监控数据</h2><ul>
+<li>短信提醒</li>
+<li>邮件提醒</li>
+</ul>
+<p>所有的问题都会指定到人，问题定义严重程度，来决定用短信或邮件发送，但是邮件是所有问题的必走渠道</p>
+<h2 id="用户反馈"><a href="#用户反馈" class="headerlink" title="用户反馈"></a>用户反馈</h2><ul>
+<li>软件内反馈</li>
+<li>热心网友电话反馈</li>
+</ul>
+<p>虽然以上两种是效率很低的，在我们技术有遗漏的时候，这种原始的方式还是很有效的，这种让我们监控移动产品比较全面，让产品正向的发展很重要的手段</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/05/30/iOS-specifications/" class="archive-article-date">
-  <time datetime="2016-05-30T07:37:38.000Z" itemprop="datePublished">5月 30</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/30/iOS-specifications/">iOS开发规范</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/04/29/iOS-MVC/" class="archive-article-date">
-  <time datetime="2016-04-28T16:14:50.000Z" itemprop="datePublished">4月 29</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2017/05/10/App-Monitor/" data-id="cj2kkifkm0005narun8pz08wv" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/29/iOS-MVC/">iOS之MVC</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/04/23/Retain-cycle/" class="archive-article-date">
-  <time datetime="2016-04-23T15:00:56.000Z" itemprop="datePublished">4月 23</time>
-</a>
+        <a href="http://blog.imemo8.com/2017/05/10/App-Monitor/#disqus_thread" class="article-comment-link">留言</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/23/Retain-cycle/">Retain cycle</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/04/21/NSSet/" class="archive-article-date">
-  <time datetime="2016-04-21T15:31:32.000Z" itemprop="datePublished">4月 21</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/21/NSSet/">NSSet</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mobile/">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monitor/">Monitor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/业务/">业务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能/">性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/04/17/RunLoop/" class="archive-article-date">
-  <time datetime="2016-04-17T05:43:00.000Z" itemprop="datePublished">4月 17</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/17/RunLoop/">RunLoop</a>
-    </h1>
   
+    <a href="/2017/02/25/apache-https/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Apache配置HTTPS</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-  
-    </div></section>
-  
 
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -315,11 +275,13 @@
 <script>
   var disqus_shortname = 'imemo8';
   
+  var disqus_url = 'http://blog.imemo8.com/2017/05/10/App-Monitor/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
