@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://blog.imemo8.com/2017/05/10/App-Monitor/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
 <meta property="og:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
-<meta property="og:updated_time" content="2017-05-11T16:10:56.000Z">
+<meta property="og:updated_time" content="2017-05-13T15:27:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何监控移动产品">
 <meta name="twitter:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
@@ -96,9 +96,15 @@
       
         <p>最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，<br>但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，<br>在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.<br><a id="more"></a></p>
 <h3 id="热修复方案"><a href="#热修复方案" class="headerlink" title="热修复方案"></a>热修复方案</h3><ul>
-<li>JSPatch</li>
-<li>LuaView</li>
-<li>React Native(RN)</li>
+<li><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch</a></li>
+<li><a href="https://github.com/alibaba/LuaViewSDK" target="_blank" rel="external">LuaView</a></li>
+<li><a href="https://github.com/facebook/react-native" target="_blank" rel="external">React Native</a></li>
+</ul>
+<p>以上三种方案，是我听的比较多，而且网络上讨论的比较多的三种方案:</p>
+<ul>
+<li>JSPatch是现在比较流行的，因为学习简单，接入成本低，功能强大,所以在很多App里都有接入，技术原理是充分利用了OC的Runtime特性<br>和JS之间的配合</li>
+<li>聚划算iOS平台动态化方案LuaView,实现是通过Lua为主的脚本语言，特点就是iOS和Andoird平台是同一套代码</li>
+<li>JSPatch在学习成本，接入成本，热更新能力上占优，而 React Native 在开发效率和跨平台能力上占优，大家可以根据需求的不同选用不同的热更新方案</li>
 </ul>
 <h3 id="连续闪退自我修复"><a href="#连续闪退自我修复" class="headerlink" title="连续闪退自我修复"></a>连续闪退自我修复</h3><p>首先分析什么情况会出现反复闪退</p>
 <ul>
@@ -114,7 +120,7 @@
 <li>NSException</li>
 </ul>
 <p>iOS的错误处理机制不在本地的讲解中，如果有兴趣可以到<a href="http://mp.weixin.qq.com/s?__biz=MjM5NTIyNTUyMQ==&amp;mid=208483273&amp;idx=1&amp;sn=37ee88e06e7426f59f3074c536370317&amp;scene=21" target="_blank" rel="external">念茜的漫谈 iOS Crash 收集框架</a></p>
-<p>我们将所有的错误列处理，如果出现错误了，我们将错误上传到我们服务器。</p>
+<p>我们将所有的错误列处理，如果出现错误了，我们将错误上传到服务器。</p>
 <h2 id="性能监测"><a href="#性能监测" class="headerlink" title="性能监测"></a>性能监测</h2><ul>
 <li>卡顿监测(Runloop机制，监测每次主线程的执行时间)</li>
 <li>页面渲染时间和请求时长</li>
@@ -128,24 +134,23 @@
 <li><p>功能异常<br>如:没有按照自己既定的逻辑运行</p>
 </li>
 </ul>
-<h2 id="自动化测试监测"><a href="#自动化测试监测" class="headerlink" title="自动化测试监测"></a>自动化测试监测</h2><ul>
-<li>根据自己的业务，定制制动化测试计划，让软件一直处于运行状态，从而监测软件的运行健壮性和业务问题</li>
-</ul>
+<h2 id="自动化测试监测"><a href="#自动化测试监测" class="headerlink" title="自动化测试监测"></a>自动化测试监测</h2><p><strong>根据自己的业务，定制制动化测试计划，让软件一直处于运行状态，从而监测软件的运行健壮性和业务问题,<br>这样能比较全面的覆盖到，无论是App的bug,还是测试业务问题，以及架构的优缺点，对于公司内部的自我升级是很有帮助的，<br>所以自动化测试环节是必不可少的.</strong></p>
 <h2 id="发送监控数据形式"><a href="#发送监控数据形式" class="headerlink" title="发送监控数据形式"></a>发送监控数据形式</h2><ul>
 <li>短信提醒</li>
 <li>邮件提醒</li>
 </ul>
-<p>所有的问题都会指定到人，问题定义严重程度，来决定用短信或邮件发送，但是邮件是所有问题的必走渠道</p>
+<p>所有的问题都会指定到人，问题定义严重程度，来决定用短信或邮件发送，但是邮件是所有问题的必走渠道.<br>还有一个问题就是，我们的监控数据或者需要优化的数据怎么让用户重视起来，不能简单的发送过去，我们要让开发重视起来并去解决这些问题</p>
 <h2 id="用户反馈"><a href="#用户反馈" class="headerlink" title="用户反馈"></a>用户反馈</h2><ul>
 <li>软件内反馈</li>
 <li>热心网友电话反馈</li>
 </ul>
-<p>虽然以上两种是效率很低的，在我们技术有遗漏的时候，这种原始的方式还是很有效的，这种让我们监控移动产品比较全面，让产品正向的发展很重要的手段</p>
+<p>用户反馈，虽然以上两种是效率很低的，在我们技术有遗漏的时候，这种原始的方式还是很有效的，这种让我们监控移动产品比较全面，让产品正向的发展很重要的手段</p>
+<p><strong>以上是我最近对产品检测的思考和总结，我首先是整体的规划下，以上每个话题都是可以单独开一篇来详细讨论，<br>所以不排除在接下来的时间来一一完善我们文章里提到的重点和解决方案</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2017/05/10/App-Monitor/" data-id="cj2km28ws0000q7rugw8z7f1t" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2017/05/10/App-Monitor/" data-id="cj2nfa69l0000onruumn7nj5f" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2017/05/10/App-Monitor/#disqus_thread" class="article-comment-link">留言</a>
       
