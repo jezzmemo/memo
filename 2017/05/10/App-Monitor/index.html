@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何监控移动产品 | iMemo的技术博客</title>
+  <title>iMemo的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
+  <meta name="description" content="专注于移动开发技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何监控移动产品">
+<meta property="og:title" content="iMemo的技术博客">
 <meta property="og:url" content="http://blog.imemo8.com/2017/05/10/App-Monitor/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
-<meta property="og:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
-<meta property="og:updated_time" content="2017-05-13T15:32:16.000Z">
+<meta property="og:description" content="专注于移动开发技术">
+<meta property="og:updated_time" content="2017-05-14T13:57:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何监控移动产品">
-<meta name="twitter:description" content="最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.">
+<meta name="twitter:title" content="iMemo的技术博客">
+<meta name="twitter:description" content="专注于移动开发技术">
   
     <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
   
@@ -71,92 +71,24 @@
         <section id="main"><article id="post-App-Monitor" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/05/10/App-Monitor/" class="article-date">
-  <time datetime="2017-05-10T14:01:31.000Z" itemprop="datePublished">2017-05-10</time>
+  <time datetime="2017-05-10T14:23:20.000Z" itemprop="datePublished">2017-05-10</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/运营/">运营</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      如何监控移动产品
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在思考让产品稳定的向前发展，发现我们在产品的监控环境做的不是很好，仅仅只是嵌入了一个SDK，虽然有一些运营数据和Bug收集功能，<br>但是对产品的业务没有检测，不能很好让开发和产品运营相互配合，不利于产品更好的完善以及用户体验，对于发布出去的App要有很好的掌控，<br>在参考了各个大公司的监测手段后，我对移动产品的监测总结如下.<br><a id="more"></a></p>
-<h3 id="热修复方案"><a href="#热修复方案" class="headerlink" title="热修复方案"></a>热修复方案</h3><ul>
-<li><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch</a></li>
-<li><a href="https://github.com/alibaba/LuaViewSDK" target="_blank" rel="external">LuaView</a></li>
-<li><a href="https://github.com/facebook/react-native" target="_blank" rel="external">React Native</a></li>
-</ul>
-<p>以上三种方案，是我听的比较多，而且网络上讨论的比较多的三种方案:</p>
-<ul>
-<li>JSPatch是现在比较流行的，因为学习简单，接入成本低，功能强大,所以在很多App里都有接入，技术原理是充分利用了OC的Runtime特性<br>和JS之间的配合</li>
-<li>聚划算iOS平台动态化方案LuaView,实现是通过Lua为主的脚本语言，特点就是iOS和Andoird平台是同一套代码</li>
-<li>JSPatch在学习成本，接入成本，热更新能力上占优，而 React Native 在开发效率和跨平台能力上占优，大家可以根据需求的不同选用不同的热更新方案</li>
-</ul>
-<h3 id="连续闪退自我修复"><a href="#连续闪退自我修复" class="headerlink" title="连续闪退自我修复"></a>连续闪退自我修复</h3><p>首先分析什么情况会出现反复闪退</p>
-<ul>
-<li>数据库损坏</li>
-<li>文件损坏</li>
-<li>网络数据异常</li>
-<li>代码bug</li>
-</ul>
-<p>通过计数检测App有没反复闪退，如果有闪退通过步骤恢复：<br>1.修复数据库<br>2.删除本地所有数据(如果远程有数据，可以直接删除，如果没有先要备份到网络上，以免丢失用户有价值数据)<br>3.检测有没下发的Patch更新，如果没有，将上次Crash原因上报到系统<br>4.重新进入初始化过程</p>
-<h3 id="Crash报错"><a href="#Crash报错" class="headerlink" title="Crash报错"></a>Crash报错</h3><ul>
-<li>Mach 异常：EXC_CRASH</li>
-<li>UNIX 信号：SIGABRT</li>
-<li>NSException</li>
-</ul>
-<p>iOS的错误处理机制不在本地的讲解中，如果有兴趣可以到<a href="http://mp.weixin.qq.com/s?__biz=MjM5NTIyNTUyMQ==&amp;mid=208483273&amp;idx=1&amp;sn=37ee88e06e7426f59f3074c536370317&amp;scene=21" target="_blank" rel="external">念茜的漫谈 iOS Crash 收集框架</a></p>
-<p>我们将所有的错误列处理，如果出现错误了，我们将错误上传到服务器。</p>
-<h2 id="性能监测"><a href="#性能监测" class="headerlink" title="性能监测"></a>性能监测</h2><ul>
-<li>卡顿监测(Runloop机制，监测每次主线程的执行时间)</li>
-<li>页面渲染时间和请求时长</li>
-<li>CPU,内存，FPS，网络负载</li>
-</ul>
-<p>卡顿监测和页面的请求时间是很重要的，因为这很影响用户的体验，而且是很直接的，所以这部分数据是很有价值的.</p>
-<p>CPU:分析那块业务复杂程度，为什么会长时间很高，带来的直接问题就是用户响应慢，耗电量快<br>内存:主要用来分析泄露以及不恰当的内存分配方式<br>FPS:用来反映的流畅程度<br>网络负载:反映App的网络使用情况，不论是bug，还是流量监控</p>
-<h2 id="业务监测"><a href="#业务监测" class="headerlink" title="业务监测"></a>业务监测</h2><ul>
-<li><p>数据异常<br>如:书本打不开，下载经常失败</p>
-</li>
-<li><p>功能异常<br>如:没有按照自己既定的逻辑运行</p>
-</li>
-</ul>
-<h2 id="自动化测试监测"><a href="#自动化测试监测" class="headerlink" title="自动化测试监测"></a>自动化测试监测</h2><p><strong>根据自己的业务，定制制动化测试计划，让软件一直处于运行状态，从而监测软件的运行健壮性和业务问题,<br>这样能比较全面的覆盖到，无论是App的bug,还是测试业务问题，以及架构的优缺点，对于公司内部的自我升级是很有帮助的，<br>所以自动化测试环节是必不可少的.</strong></p>
-<h2 id="发送监控数据形式"><a href="#发送监控数据形式" class="headerlink" title="发送监控数据形式"></a>发送监控数据形式</h2><ul>
-<li>短信提醒</li>
-<li>邮件提醒</li>
-</ul>
-<p>所有的问题都会指定到人，问题定义严重程度，来决定用短信或邮件发送，但是邮件是所有问题的必走渠道.<br>还有一个问题就是，我们的监控数据或者需要优化的数据怎么让用户重视起来，不能简单的发送过去，我们要让开发重视起来并去解决这些问题</p>
-<h2 id="用户反馈"><a href="#用户反馈" class="headerlink" title="用户反馈"></a>用户反馈</h2><ul>
-<li>软件内反馈</li>
-<li>热心网友电话反馈</li>
-</ul>
-<p>用户反馈，虽然以上两种是效率很低的，在我们技术有遗漏的时候，这种原始的方式还是很有效的，这种让我们监控移动产品比较全面，让产品正向的发展很重要的手段</p>
-<p><strong>以上是我最近对产品检测的思考和总结，我首先是整体的规划下，以上每个话题都是可以单独开一篇来详细讨论，<br>所以不排除在接下来的时间来一一完善我们文章里提到的重点和解决方案,让整个监控真实反映出我们各个环境可能存在的问题，这样才能把产品推到一个比较高的高度.</strong></p>
-
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2017/05/10/App-Monitor/" data-id="cj2nfk8jm0000qvruaazv5tnk" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2017/05/10/App-Monitor/" data-id="cj2orndho0000uxru481v5qab" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2017/05/10/App-Monitor/#disqus_thread" class="article-comment-link">留言</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mobile/">Mobile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Monitor/">Monitor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/业务/">业务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能/">性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>
-
     </footer>
   </div>
   
@@ -188,7 +120,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/运营/">运营</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li></ul>
     </div>
   </div>
 
@@ -198,7 +130,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mobile/">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monitor/">Monitor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/业务/">业务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/监控/">监控</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li></ul>
     </div>
   </div>
 
@@ -208,7 +140,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/业务/" style="font-size: 10px;">业务</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a>
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a>
     </div>
   </div>
 
@@ -230,7 +162,7 @@
       <ul>
         
           <li>
-            <a href="/2017/05/10/App-Monitor/">如何监控移动产品</a>
+            <a href="/2017/05/10/App-Monitor/">(no title)</a>
           </li>
         
           <li>
