@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://blog.imemo8.com/2017/06/20/ScrollView/index.html">
 <meta property="og:site_name" content="iMemo的技术博客">
 <meta property="og:description" content="产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式">
-<meta property="og:updated_time" content="2017-06-21T04:38:54.000Z">
+<meta property="og:updated_time" content="2017-06-21T04:40:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ScrollView滑动的原理">
 <meta name="twitter:description" content="产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式">
@@ -115,7 +115,7 @@
 <ul>
 <li>ScrollView::processAutoScrolling</li>
 </ul>
-<p>这是移动View的主逻辑，在之前ScrollView::handleReleaseLogic准备好的数据，<strong>总时间</strong>，<strong>当前时间</strong>,<strong>每次偏移的长度</strong>，<strong>当前的位置</strong>,还有就是做了一个平滑的处理，函数的公式如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">percentage = tweenfunc::quintEaseOut(percentage);</span><br></pre></td></tr></table></figure></p>
+<p>这是移动View的主逻辑，在之前ScrollView::handleReleaseLogic准备好的数据，<strong>总时间</strong>，<strong>当前时间</strong>，<strong>每次偏移的长度</strong>，<strong>当前的位置</strong>,还有就是做了一个平滑的处理，函数的公式如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">percentage = tweenfunc::quintEaseOut(percentage);</span><br></pre></td></tr></table></figure></p>
 <p>quintEaseOut的具体实现:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">quintEaseOut</span><span class="params">(<span class="keyword">float</span> time)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    time -=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (time * time * time * time * time + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>将每次的变化非常小，这样的目的是为了让滑动的过程非常流畅，不会很突兀和生硬。</p>
 <p>另外单独说下，这里面有一些边界的逻辑判定，还有就是_bounceEnabled,滑动到头的时候，会有一个反弹的效果，都是以位置的变化来做的，包括scrollbar，我这里都没有详细说，其实不太难，我主要是为了讲解为什么会有一个自然的滑动过程。</p>
@@ -125,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2017/06/20/ScrollView/" data-id="cj46i4b6q00078uru7ybv3z6x" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2017/06/20/ScrollView/" data-id="cj46ifz620009a5ru9lsm4jkd" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2017/06/20/ScrollView/#disqus_thread" class="article-comment-link">留言</a>
       
