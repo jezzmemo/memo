@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="iMemo的技术博客">
 <meta property="og:description" content="问题爱墨日记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
 123[[NSAttributedString alloc] initWithData:originData options:@&amp;#123; NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentT">
-<meta property="og:updated_time" content="2017-06-21T06:55:59.000Z">
+<meta property="og:updated_time" content="2017-06-21T06:58:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSAttributedString的坑">
 <meta name="twitter:description" content="问题爱墨日记里用到了NSAttributedString，这里没有用到他的富文本显示，倒是用到了他的转换功能，我需要将HTML转换成文本，代码示例如下:
@@ -112,12 +112,12 @@
 <h4 id="DTCoreText"><a href="#DTCoreText" class="headerlink" title="DTCoreText"></a>DTCoreText</h4><p>是一个基于CoreText的第三方库，在文字处理能力很强大，他的不是基于Webkit的，所以性能是很大的优点,缺点就是功能过于强大，其实我们只用到了已小部分功能，而且我们要入两个Framework,给程序的启动增加了一定的时间.</p>
 <p>代码示例:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *htmlStripped = </span><br><span class="line">[[<span class="built_in">NSAttributedString</span> attributedStringWithHTML:DATA_FOR_MY_HTML options:<span class="literal">nil</span>] string];</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h3 id="2017-6-21"><a href="#2017-6-21" class="headerlink" title="2017-6-21"></a>2017-6-21</h3><p>后面我用主线程来执行NSAttributedString initWithData发现还是有闪退的问题，网上遇到这样的问题也有，但是没有给出解决方案，后面我只能尝试下自己解析HTML方式来过滤自己想要的内容，经过监控发现没有这个问题了，DTCoreText是通过自己解析HTML方式来解析内容的，所以也不会有_WebSafeForwarder这个问题。</p>
+<h3 id="2017-6-21"><a href="#2017-6-21" class="headerlink" title="2017-6-21"></a>2017-6-21</h3><p>后面我用主线程来执行NSAttributedString initWithData发现还是有闪退的问题，网上遇到这样的问题也有，但是没有给出解决方案，后面我只能尝试下自己解析HTML方式来过滤自己想要的内容，经过监控发现没有这个问题了，DTCoreText是通过自己解析HTML方式来解析内容的，所以也不会有_WebSafeForwarder这个问题，所以这个问题证明官方的API是有BUG的，在频繁处理转化工作的时候建议不要用NSAttributedString initWithData的方式.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imemo8.com/2016/12/20/NSAttributedString/" data-id="cj46nalv60002eyruvhqoa70x" class="article-share-link">Share</a>
+      <a data-url="http://blog.imemo8.com/2016/12/20/NSAttributedString/" data-id="cj46ne8ev0005g1ruyi2i8m2v" class="article-share-link">Share</a>
       
         <a href="http://blog.imemo8.com/2016/12/20/NSAttributedString/#disqus_thread" class="article-comment-link">留言</a>
       
