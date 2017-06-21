@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ScrollView滑动的原理 | iMemo的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ScrollView滑动的原理">
+<meta property="og:url" content="http://blog.imemo8.com/2017/06/20/ScrollView/index.html">
+<meta property="og:site_name" content="iMemo的技术博客">
+<meta property="og:description" content="产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式">
+<meta property="og:updated_time" content="2017-06-21T04:25:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ScrollView滑动的原理">
+<meta name="twitter:description" content="产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式">
+  
+    <link rel="alternate" href="/atom.xml" title="iMemo的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">iMemo的技术博客</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">记录技术点滴</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imemo8.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ScrollView" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/20/ScrollView/" class="article-date">
+  <time datetime="2017-06-20T14:01:31.000Z" itemprop="datePublished">2017-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Cocos2d/">Cocos2d</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ScrollView滑动的原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>产品一直有滑动不够流畅的问题，因为我们的滑动没有模拟用户滑动的时候做一个加速到减速的过程，导致滑动是很生硬，<br>最近这个问题的优先级提高了，所以我们要想个办法让滑动和Tableview或者ScrollView滑动的体验，这倒是给我们指明了一个方向，<br>我们可以模拟Tableview或者ScrollView的整个过程，有了这个前提和技术方案，接下来以Cocos2d-x为例子，来了解这里面的技术原理和实现方式.<br><a id="more"></a></p>
+<h3 id="以事件为入口"><a href="#以事件为入口" class="headerlink" title="以事件为入口"></a>以事件为入口</h3><ul>
+<li>ScrollView::handlePressLogic</li>
+</ul>
+<p>点击响应的开始，这个函数的主要功能是记录点击的事件状态，以及当前点击时间的时间戳，以及ScrollBar相应也开始</p>
+<ul>
+<li>ScrollView::handleMoveLogic</li>
+</ul>
+<p>滑动的逻辑，在滑动的过程中，这个函数会执行很多次，这个里面的主要记录了当前和上次的Location，然后通过上面两个值计算出一个delta，然后通过一个集合来记录这些delta和对应的时间，里面还有一些细节就是scrollChildren函数，来实现让当前的node的position变化，<strong>这里有个细节就是在这个函数里是一个加速的过程，所以接下来的释放的过程是减速的.</strong></p>
+<ul>
+<li>ScrollView::handleReleaseLogic</li>
+</ul>
+<p>在onTouchEnded和onTouchCancelled都会执行handleReleaseLogic，在用户手势结束后，会把之前的手势划过的距离和时间总计，然后就算一个速度出来，通过一个公式计算出本次执行的时间，公式如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> time = sqrtf(sqrtf(initialSpeed / <span class="number">5</span>));</span><br></pre></td></tr></table></figure></p>
+<p>如果在这个逻辑完成后，会将_autoScrolling状态为true,还有就是每次变化的delta，为每帧变化做数据准备。</p>
+<h3 id="以帧数变化来驱动位置的变化"><a href="#以帧数变化来驱动位置的变化" class="headerlink" title="以帧数变化来驱动位置的变化"></a>以帧数变化来驱动位置的变化</h3><ul>
+<li>ScrollView::update</li>
+</ul>
+<p>和屏幕的闪动的频率一直,60HZ，最终由iOS的DisplayLink来驱动.</p>
+<ul>
+<li>ScrollView::processAutoScrolling</li>
+</ul>
+<p>这是移动View的主逻辑，在之前ScrollView::handleReleaseLogic准备好的数据，<strong>总时间</strong>，<strong>每次偏移的长度</strong>，<strong>当前的位置</strong>,还有就是做了一个平滑的处理，函数的公式如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">percentage = tweenfunc::quintEaseOut(percentage);</span><br></pre></td></tr></table></figure></p>
+<p>将每次的变化非常小，这样的目的是为了让滑动的过程非常流畅，不会很突兀和生硬。</p>
+<p>另外单独说下，这里面有一些边界的逻辑判定，还有就是_bounceEnabled,滑动到头的时候，会有一个反弹的效果，都是以位置的变化来做的，包括scrollbar，我这里都没有详细说，其实不太难，我主要是为了讲解为什么会有一个自然的滑动过程。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本次主要是去理解这其中的滑动的过程，通过数值分析，就是数字通过平滑曲线的增长以及曲线的减少，来达到非常平滑的移动.</p>
+<h3 id="参考源码"><a href="#参考源码" class="headerlink" title="参考源码"></a>参考源码</h3><p><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/ui/UIScrollView.cpp" target="_blank" rel="external">ScrollView</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imemo8.com/2017/06/20/ScrollView/" data-id="cj46he6qq000853rukbxqe0v4" class="article-share-link">Share</a>
+      
+        <a href="http://blog.imemo8.com/2017/06/20/ScrollView/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ScrollView/">ScrollView</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/曲线算法/">曲线算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/滑动/">滑动</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/10/App-Monitor/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何监控移动产品</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocos2d/">Cocos2d</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/运营/">运营</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AFNetworking/">AFNetworking</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Architecture/">Architecture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Block/">Block</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-iOS/">Cocos2d-iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cocos2d-x/">Cocos2d-x</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cycle/">Cycle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mobile/">Mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Modes/">Modes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Monitor/">Monitor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSArray/">NSArray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSAttributedString/">NSAttributedString</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSSet/">NSSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Runloop/">Runloop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ScrollView/">ScrollView</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Specifications/">Specifications</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sprite/">Sprite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadSafe/">ThreadSafe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webkit/">Webkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cache/">cache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retaincount/">retaincount</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/业务/">业务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步加载/">异步加载</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能/">性能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/曲线算法/">曲线算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/滑动/">滑动</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/监控/">监控</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AFNetworking/" style="font-size: 10px;">AFNetworking</a> <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/Architecture/" style="font-size: 20px;">Architecture</a> <a href="/tags/Block/" style="font-size: 10px;">Block</a> <a href="/tags/Cocos2d-iOS/" style="font-size: 10px;">Cocos2d-iOS</a> <a href="/tags/Cocos2d-x/" style="font-size: 10px;">Cocos2d-x</a> <a href="/tags/Cycle/" style="font-size: 10px;">Cycle</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/Mobile/" style="font-size: 10px;">Mobile</a> <a href="/tags/Modes/" style="font-size: 10px;">Modes</a> <a href="/tags/Monitor/" style="font-size: 10px;">Monitor</a> <a href="/tags/NSArray/" style="font-size: 10px;">NSArray</a> <a href="/tags/NSAttributedString/" style="font-size: 10px;">NSAttributedString</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/NSSet/" style="font-size: 10px;">NSSet</a> <a href="/tags/Runloop/" style="font-size: 10px;">Runloop</a> <a href="/tags/ScrollView/" style="font-size: 10px;">ScrollView</a> <a href="/tags/Specifications/" style="font-size: 10px;">Specifications</a> <a href="/tags/Sprite/" style="font-size: 10px;">Sprite</a> <a href="/tags/ThreadSafe/" style="font-size: 10px;">ThreadSafe</a> <a href="/tags/Webkit/" style="font-size: 10px;">Webkit</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/retaincount/" style="font-size: 10px;">retaincount</a> <a href="/tags/业务/" style="font-size: 10px;">业务</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/异步加载/" style="font-size: 10px;">异步加载</a> <a href="/tags/性能/" style="font-size: 10px;">性能</a> <a href="/tags/曲线算法/" style="font-size: 10px;">曲线算法</a> <a href="/tags/滑动/" style="font-size: 10px;">滑动</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/20/ScrollView/">ScrollView滑动的原理</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/10/App-Monitor/">如何监控移动产品</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/25/apache-https/">Apache配置HTTPS</a>
+          </li>
+        
+          <li>
+            <a href="/2016/12/20/NSAttributedString/">NSAttributedString的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/21/iOS-cache-reference/">缓存对象有没被引用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jezz<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'imemo8';
+  
+  var disqus_url = 'http://blog.imemo8.com/2017/06/20/ScrollView/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
